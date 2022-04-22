@@ -1,0 +1,331 @@
+\hypertarget{class_date}{}\doxysection{Date Class Reference}
+\label{class_date}\index{Date@{Date}}
+
+
+A class that represends a day of the year.  
+
+
+
+
+{\ttfamily \#include $<$Date.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_date_a4e59ed4ba66eec61c27460c5d09fa1bd}{Date}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_date_a60394c60be6b407528203c224c7934da}{Date}} (unsigned short int day, unsigned short int month, unsigned short int year)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_date_a2b355bff957cfb8a86c78c8ed805ea53}{set\+Day}} (unsigned short int day)
+\begin{DoxyCompactList}\small\item\em Setter for the day field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_date_a0b1bdf4b75156a6d081fc82a0e43c72a}{set\+Month}} (unsigned short int month)
+\begin{DoxyCompactList}\small\item\em Setter for the month field. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_date_ae3d9c6557d8279ddbe3d0ac137d0f57d}{set\+Year}} (unsigned short int year)
+\begin{DoxyCompactList}\small\item\em Setter for the year field. \end{DoxyCompactList}\item 
+unsigned short int \mbox{\hyperlink{class_date_ad1027826c21788e36f856a00dba36814}{get\+Day}} () const
+\begin{DoxyCompactList}\small\item\em Getter for the day field. \end{DoxyCompactList}\item 
+unsigned short int \mbox{\hyperlink{class_date_a90d615820a5b750c242148dba96cbff1}{get\+Month}} () const
+\begin{DoxyCompactList}\small\item\em Getter for the month field. \end{DoxyCompactList}\item 
+unsigned short int \mbox{\hyperlink{class_date_ac93228c7bdc6377745f706294952c775}{get\+Year}} () const
+\begin{DoxyCompactList}\small\item\em Getter for the year field. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_date_a56469dbfb6a0c32326330796cb316881}{operator$<$}} (const \mbox{\hyperlink{class_date}{Date}} \&other) const
+\begin{DoxyCompactList}\small\item\em Overwrite for the \texorpdfstring{$<$}{<} operator. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_date_ab2943ef426612046e084e2d885c5fed4}{operator$>$}} (const \mbox{\hyperlink{class_date}{Date}} \&other) const
+\begin{DoxyCompactList}\small\item\em Overwrite for the \texorpdfstring{$>$}{>} operator. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_date_a3b103cc8257d3055aedb519fff343503}{operator==}} (const \mbox{\hyperlink{class_date}{Date}} \&other) const
+\begin{DoxyCompactList}\small\item\em Overwrite for the == operator. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_date_af47f5313d22ea8a75eb9270d433abd6b}{operator!=}} (const \mbox{\hyperlink{class_date}{Date}} \&other) const
+\begin{DoxyCompactList}\small\item\em Overwrite for the != operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{class_date_ac5ac4e8f544e4d03a093246341a0cd31}{operator$<$$<$}} (std\+::ostream $\ast$stream, const \mbox{\hyperlink{class_date}{Date}} \&date)
+\begin{DoxyCompactList}\small\item\em Overwrite for the \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} operator. \end{DoxyCompactList}\item 
+std\+::istream \& \mbox{\hyperlink{class_date_ad47ccbe762dd1489a27218dd58324df6}{operator$>$$>$}} (std\+::istream \&stream, const \mbox{\hyperlink{class_date}{Date}} \&date)
+\begin{DoxyCompactList}\small\item\em Overwrite for the \texorpdfstring{$>$}{>}\texorpdfstring{$>$}{>} operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class that represends a day of the year. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_date_a4e59ed4ba66eec61c27460c5d09fa1bd}\label{class_date_a4e59ed4ba66eec61c27460c5d09fa1bd}} 
+\index{Date@{Date}!Date@{Date}}
+\index{Date@{Date}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{Date()}{Date()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Date\+::\+Date (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor. 
+
+Sets all fields to be zero, marking that they are not yet set \mbox{\Hypertarget{class_date_a60394c60be6b407528203c224c7934da}\label{class_date_a60394c60be6b407528203c224c7934da}} 
+\index{Date@{Date}!Date@{Date}}
+\index{Date@{Date}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{Date()}{Date()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Date\+::\+Date (\begin{DoxyParamCaption}\item[{unsigned short int}]{day,  }\item[{unsigned short int}]{month,  }\item[{unsigned short int}]{year }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+Initialy all fields are set to be zero by initializer list. This is to ensure that if the day setter (set\+Day) is called before the others the day setter can throw exception about the other fields not being set.
+
+Parameters\+:
+\begin{DoxyItemize}
+\item unsigned short int day~\newline
+ represents a day of a month
+\item unsigned short int month~\newline
+ represents a month of a year
+\item unsigned short int year~\newline
+ represents a year 
+\end{DoxyItemize}
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_date_ad1027826c21788e36f856a00dba36814}\label{class_date_ad1027826c21788e36f856a00dba36814}} 
+\index{Date@{Date}!getDay@{getDay}}
+\index{getDay@{getDay}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{getDay()}{getDay()}}
+{\footnotesize\ttfamily unsigned short int Date\+::get\+Day (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Getter for the day field. 
+
+Returns\+: unsigned short int representing the day \mbox{\Hypertarget{class_date_a90d615820a5b750c242148dba96cbff1}\label{class_date_a90d615820a5b750c242148dba96cbff1}} 
+\index{Date@{Date}!getMonth@{getMonth}}
+\index{getMonth@{getMonth}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{getMonth()}{getMonth()}}
+{\footnotesize\ttfamily unsigned short int Date\+::get\+Month (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Getter for the month field. 
+
+Returns\+: unsigned short int representing the month \mbox{\Hypertarget{class_date_ac93228c7bdc6377745f706294952c775}\label{class_date_ac93228c7bdc6377745f706294952c775}} 
+\index{Date@{Date}!getYear@{getYear}}
+\index{getYear@{getYear}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{getYear()}{getYear()}}
+{\footnotesize\ttfamily unsigned short int Date\+::get\+Year (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Getter for the year field. 
+
+Returns\+: unsigned short int representing the year \mbox{\Hypertarget{class_date_af47f5313d22ea8a75eb9270d433abd6b}\label{class_date_af47f5313d22ea8a75eb9270d433abd6b}} 
+\index{Date@{Date}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily bool Date\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_date}{Date}} \&}]{other }\end{DoxyParamCaption}) const}
+
+
+
+Overwrite for the != operator. 
+
+Parameters\+:
+\begin{DoxyItemize}
+\item const \mbox{\hyperlink{class_date}{Date}}\& other~\newline
+ the date with which we compare the current date
+\end{DoxyItemize}
+
+Returns\+:
+\begin{DoxyItemize}
+\item true~\newline
+ if the dates are different
+\item false~\newline
+ if the dates the same 
+\end{DoxyItemize}\mbox{\Hypertarget{class_date_a56469dbfb6a0c32326330796cb316881}\label{class_date_a56469dbfb6a0c32326330796cb316881}} 
+\index{Date@{Date}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{operator$<$()}{operator<()}}
+{\footnotesize\ttfamily bool Date\+::operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_date}{Date}} \&}]{other }\end{DoxyParamCaption}) const}
+
+
+
+Overwrite for the \texorpdfstring{$<$}{<} operator. 
+
+Parameters\+:
+\begin{DoxyItemize}
+\item const \mbox{\hyperlink{class_date}{Date}}\& other~\newline
+ the date with which we compare the current date
+\end{DoxyItemize}
+
+Returns\+:
+\begin{DoxyItemize}
+\item true~\newline
+ if the other date is later than the current date ($\ast$this)
+\item false~\newline
+ if the other date is earlier than the current date ($\ast$this) 
+\end{DoxyItemize}\mbox{\Hypertarget{class_date_a3b103cc8257d3055aedb519fff343503}\label{class_date_a3b103cc8257d3055aedb519fff343503}} 
+\index{Date@{Date}!operator==@{operator==}}
+\index{operator==@{operator==}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Date\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_date}{Date}} \&}]{other }\end{DoxyParamCaption}) const}
+
+
+
+Overwrite for the == operator. 
+
+Parameters\+:
+\begin{DoxyItemize}
+\item const \mbox{\hyperlink{class_date}{Date}}\& other~\newline
+ the date with which we compare the current date
+\end{DoxyItemize}
+
+Returns\+:
+\begin{DoxyItemize}
+\item true~\newline
+ if the dates are the same
+\item false~\newline
+ if the dates are different 
+\end{DoxyItemize}\mbox{\Hypertarget{class_date_ab2943ef426612046e084e2d885c5fed4}\label{class_date_ab2943ef426612046e084e2d885c5fed4}} 
+\index{Date@{Date}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{operator$>$()}{operator>()}}
+{\footnotesize\ttfamily bool Date\+::operator$>$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_date}{Date}} \&}]{other }\end{DoxyParamCaption}) const}
+
+
+
+Overwrite for the \texorpdfstring{$>$}{>} operator. 
+
+Parameters\+:
+\begin{DoxyItemize}
+\item const \mbox{\hyperlink{class_date}{Date}}\& other~\newline
+ the date with which we compare the current date
+\end{DoxyItemize}
+
+Returns\+:
+\begin{DoxyItemize}
+\item true~\newline
+ if the current date ($\ast$this) is later than the other date
+\item false~\newline
+ if the current date ($\ast$this) is earlier than the other date 
+\end{DoxyItemize}\mbox{\Hypertarget{class_date_a2b355bff957cfb8a86c78c8ed805ea53}\label{class_date_a2b355bff957cfb8a86c78c8ed805ea53}} 
+\index{Date@{Date}!setDay@{setDay}}
+\index{setDay@{setDay}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{setDay()}{setDay()}}
+{\footnotesize\ttfamily void Date\+::set\+Day (\begin{DoxyParamCaption}\item[{unsigned short int}]{day }\end{DoxyParamCaption})}
+
+
+
+Setter for the day field. 
+
+Requires that the month and the year are set in order to properly validated that the day is valid.
+
+Parameters\+:
+\begin{DoxyItemize}
+\item unsigned short int day represents a day of a month
+\end{DoxyItemize}
+
+Exception will be thrown if\+:
+\begin{DoxyItemize}
+\item other fields are not set
+\begin{DoxyEnumerate}
+\item year not set~\newline
+ Initializer lists in constructor will mark it zero
+\item month not set~\newline
+ Initializer lists in constructor will mark it zero
+\end{DoxyEnumerate}
+\item the value for the day is invalid
+\begin{DoxyEnumerate}
+\item the year is a leap year and day is bigger than 29
+\item the year is not a leap year and day is bigger than 28
+\item the month has 30 days and the day is bigger than 30
+\item the month has 31 days and the day is bigger than 31
+\end{DoxyEnumerate}
+\item the day is zero~\newline
+ Zero is used by constructors to mark that the day is not set 
+\end{DoxyItemize}\mbox{\Hypertarget{class_date_a0b1bdf4b75156a6d081fc82a0e43c72a}\label{class_date_a0b1bdf4b75156a6d081fc82a0e43c72a}} 
+\index{Date@{Date}!setMonth@{setMonth}}
+\index{setMonth@{setMonth}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{setMonth()}{setMonth()}}
+{\footnotesize\ttfamily void Date\+::set\+Month (\begin{DoxyParamCaption}\item[{unsigned short int}]{month }\end{DoxyParamCaption})}
+
+
+
+Setter for the month field. 
+
+Parameters\+:
+\begin{DoxyItemize}
+\item unsigned short int month represents a month of a year
+\end{DoxyItemize}
+
+Exception will be thrown if\+:
+\begin{DoxyItemize}
+\item month is zero~\newline
+ Zero is used by constructors to mark that the month is not set
+\item month is bigger than 12~\newline
+ Months can not be bigger than 12 
+\end{DoxyItemize}\mbox{\Hypertarget{class_date_ae3d9c6557d8279ddbe3d0ac137d0f57d}\label{class_date_ae3d9c6557d8279ddbe3d0ac137d0f57d}} 
+\index{Date@{Date}!setYear@{setYear}}
+\index{setYear@{setYear}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{setYear()}{setYear()}}
+{\footnotesize\ttfamily void Date\+::set\+Year (\begin{DoxyParamCaption}\item[{unsigned short int}]{year }\end{DoxyParamCaption})}
+
+
+
+Setter for the year field. 
+
+Contains constants that determine the smallest and the biggest value that a year can have
+
+Parameters\+:
+\begin{DoxyItemize}
+\item unsigned short int year~\newline
+ represents a year
+\end{DoxyItemize}
+
+Exception will be thrown if\+:
+\begin{DoxyItemize}
+\item year is outside of the allowed range~\newline
+ The allowed range for the years is determined by the constants in the setter 
+\end{DoxyItemize}
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_date_ac5ac4e8f544e4d03a093246341a0cd31}\label{class_date_ac5ac4e8f544e4d03a093246341a0cd31}} 
+\index{Date@{Date}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream $\ast$}]{stream,  }\item[{const \mbox{\hyperlink{class_date}{Date}} \&}]{date }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Overwrite for the \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} operator. 
+
+A friend function that allows us to output dates
+
+Parameters\+:
+\begin{DoxyItemize}
+\item std\+::ostream\& stream
+\item const \mbox{\hyperlink{class_date}{Date}}\& date
+\end{DoxyItemize}
+
+Returns\+:
+\begin{DoxyItemize}
+\item std\+::ostream\& 
+\end{DoxyItemize}\mbox{\Hypertarget{class_date_ad47ccbe762dd1489a27218dd58324df6}\label{class_date_ad47ccbe762dd1489a27218dd58324df6}} 
+\index{Date@{Date}!operator$>$$>$@{operator$>$$>$}}
+\index{operator$>$$>$@{operator$>$$>$}!Date@{Date}}
+\doxysubsubsection{\texorpdfstring{operator$>$$>$}{operator>>}}
+{\footnotesize\ttfamily std\+::istream \& operator$>$$>$ (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream,  }\item[{const \mbox{\hyperlink{class_date}{Date}} \&}]{date }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Overwrite for the \texorpdfstring{$>$}{>}\texorpdfstring{$>$}{>} operator. 
+
+A friend function that allows us to output dates
+
+Parameters\+:
+\begin{DoxyItemize}
+\item std\+::istream\& stream
+\item const \mbox{\hyperlink{class_date}{Date}}\& date
+\end{DoxyItemize}
+
+Returns\+:
+\begin{DoxyItemize}
+\item std\+::istream\& 
+\end{DoxyItemize}
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_date_8h}{Date.\+h}}\item 
+\mbox{\hyperlink{_date_8cpp}{Date.\+cpp}}\end{DoxyCompactItemize}
