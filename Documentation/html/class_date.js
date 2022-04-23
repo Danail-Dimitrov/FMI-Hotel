@@ -12,6 +12,6 @@ var class_date =
     [ "setDay", "class_date.html#a2b355bff957cfb8a86c78c8ed805ea53", null ],
     [ "setMonth", "class_date.html#a0b1bdf4b75156a6d081fc82a0e43c72a", null ],
     [ "setYear", "class_date.html#ae3d9c6557d8279ddbe3d0ac137d0f57d", null ],
-    [ "operator<<", "class_date.html#ac5ac4e8f544e4d03a093246341a0cd31", null ],
-    [ "operator>>", "class_date.html#ad47ccbe762dd1489a27218dd58324df6", null ]
+    [ "operator<<", "class_date.html#a4c4ff6ff6215424fcec7bea646913a2d", null ],
+    [ "operator>>", "class_date.html#a3b927867e8130f2f65f3a1aa9ab8efae", null ]
 ];
