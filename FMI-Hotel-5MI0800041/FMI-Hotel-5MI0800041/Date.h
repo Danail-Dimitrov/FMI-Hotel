@@ -17,6 +17,7 @@ public:
 	//!	Конструктор по подразбиране
 	/*! Задава стойност нула на всички член-данни, по този начин маркира, че те нямат валидна стойност*/
 	Date();
+	//! Основен конструктор
 	/*! Първоначално използва инициализиращ лист, за да зададе стойности нула на всички член-данни.
 	*	По този начин ако в констуктора се извика мутатора за ден преди тези за друготе член-данни ще има начин този мутатор да разбере, че месецът и годината нямат валидни стойности и не може да се валидира стойността на деня.
 	*	
@@ -80,19 +81,19 @@ public:
 	//!	Селектор за ден
 	/*!
 	*	Връща:
-	*		unsigned short int representing the day
+	*		unsigned short int
 	*/
 	unsigned short int getDay() const { return this->day; }
 	//!	Селектор за месец
 	/*!
 	*	Връща:
-	*		unsigned short int representing the month
+	*		unsigned short int
 	*/
 	unsigned short int getMonth() const { return this->month; }
 	//!	Селектор за година
 	/*!
 	*	Връща:
-	*		unsigned short int representing the year
+	*		unsigned short int
 	*/
 	unsigned short int getYear() const { return this->year; }
 
