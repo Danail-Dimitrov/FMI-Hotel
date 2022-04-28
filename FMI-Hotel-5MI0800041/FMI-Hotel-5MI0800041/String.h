@@ -21,12 +21,12 @@ public:
 	//! Конструктор по подразбиране
 	/*! Създава нов масив с един елемет - "\0"*/
 	String();
-	//! Основен конструктор
+	//! Конструктор с параметри
 	/*! Задава стойността на параметъра на член-данната
 	*	Параметри:
 	*		- char* data	  
 	*/
-	String(char* data);
+	String(const char* data);
 	//!	Копи конструктор
 	/*!	Създава нов обект като ползва друг за образец
 	*	Параметри:
@@ -34,13 +34,21 @@ public:
 	*/
 	String(const String& other);
 
+	//Мутатори
+	//!	Мутатор за данни
+	/*!
+	*	Параметри:
+	*		- char* data
+	*/
+	void setData(const char* data);
+
 	//Селектори:
 	//!	Селектор за данни
 	/*!
 	*	Връща:
 	*		char*
 	*/
-	char* getData() { return data; }
+	char* getData() const { return data; }
 
 	//Оператори:
 	//!	Оператор =
@@ -77,6 +85,6 @@ public:
 	*	Връща:
 	*		- std::istream&
 	*/
-	friend std::istream& operator>>(std::istream& stream, const String& obj);
+	friend std::istream& operator>>(std::istream& stream, String& obj);
 };
 #endif

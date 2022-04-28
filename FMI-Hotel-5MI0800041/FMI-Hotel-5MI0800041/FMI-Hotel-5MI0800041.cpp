@@ -1,18 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include "Date.h"
+#include "String.h"
 
 int main()
 {
-    Date date;
-    std::ifstream is("test.txt");
-
-    if(!is.is_open())
-        return 1;
-
-    is >> date;
-
-    is.close();
-
-    std::cout << date;
+    String str;
+    std::cin >> str;
+    std::cout << str;
 }

@@ -1,11 +1,11 @@
 ﻿#include "String.h"
+#include "HelperController.h"
+#pragma warning(disable:4996)
 
 void String::copy(const String& other)
 {
 	deleteMemory();
-	unsigned size = strlen(other.data);
-	this->data = new char[size + 1];
-	strcpy(this->data, other.data);
+	setData(other.data);
 }
 
 void String::deleteMemory()
@@ -20,16 +20,21 @@ String::String()
 	this->data[0] = '\0';
 }
 
-String::String(char* data)
+String::String(const char* data): data(nullptr)
 {
-	unsigned size = strlen(data);
-	this->data = new char[size + 1];
-	strcpy(this->data, data);
+	setData(data);
 }
 
-String::String(const String& other)
+String::String(const String& other): data(nullptr)
 {
 	copy(other);
+}
+
+void String::setData(const char* data)
+{
+	delete[] this->data;
+	this->data = new char[strlen(data) + 1];
+	strcpy(this->data, data);
 }
 
 String& String::operator=(const String& other)
@@ -50,5 +55,32 @@ String::~String()
 std::ostream& operator<<(std::ostream& stream, const String& obj)
 {
 	stream << obj.data;
+	return stream;
+}
+
+//Оправи в бъдеще
+std::istream& operator>>(std::istream& stream, String& obj)
+{	
+	int capacity = 501;
+	int size = 0;
+	char* arr = new char[capacity];
+	char crr;
+	stream.get(crr);
+	while(crr != '\n' && !stream.eof())
+	{
+		//+1 зада имам накрая място за \0
+		if (size + 1 == capacity)
+			HelperController::Resize(arr, capacity);
+
+		arr[size] = crr;
+		size++;
+		stream.get(crr);
+	}
+
+	arr[size] = '\0';
+
+	obj.deleteMemory();
+	obj.setData(arr);
+
 	return stream;
 }

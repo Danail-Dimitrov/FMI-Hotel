@@ -2,7 +2,7 @@
 
 void Date::setDay(unsigned short int day)
 {
-	if(this->day == 0)
+	if(day == 0)
 		throw "Invalid day!";
 	
 	//Трябва да има зададена стойност на член-данните month(месец) и year(година), за да може да се провери коректността на стойността, която искаме да зададем на член-данната day (ден)
@@ -16,11 +16,11 @@ void Date::setDay(unsigned short int day)
 	//Израза на ред 17, които проверя дали една година е високосна, е направен на база информацията от страницата: https://www.mathsisfun.com/leap-years.html
 	bool isLeapYear = (this->year % 4 == 0 && this->year % 100 != 0) || this->year % 400 == 0;
 
-	if(this->month == 2 && this->day > 28 + isLeapYear)
+	if(this->month == 2 && day > 28 + isLeapYear)
 		throw "Invalid day!";
-	else if((this->month == 4 || this->month == 6 || this->month == 9 || this->month == 11) && this->day > 30)
+	else if((this->month == 4 || this->month == 6 || this->month == 9 || this->month == 11) && day > 30)
 		throw "Invalid day!";
-	else if (this->day > 31)
+	else if (day > 31)
 		throw "Invalid day!";
 
 	this->day = day;
@@ -28,7 +28,7 @@ void Date::setDay(unsigned short int day)
 
 void Date::setMonth(unsigned short int month)
 {
-	if(this->month == 0 || this->month > 12)
+	if(month == 0 || month > 12)
 		throw "Invalid month!";
 
 	this->month = month;
@@ -39,7 +39,7 @@ void Date::setYear(unsigned short int year)
 	const unsigned short int MIN_YEAR = 2022;
 	const unsigned short int MAX_YEAR = 2050;
 
-	if(this->year < MIN_YEAR || this->year > MAX_YEAR)
+	if(year < MIN_YEAR || year > MAX_YEAR)
 		throw "Invalid year!";
 
 	this->year = year;
@@ -80,14 +80,24 @@ Date::Date(unsigned short int day, unsigned short int month, unsigned short int 
 	setDay(day);
 }
 
-std::ostream& operator<<(std::ostream& stream, const Date& date)
+std::ostream& operator<<(std::ostream& stream, const Date& obj)
 {
-	stream << date.getDay() << date.getMonth() << date.getYear();
+	stream << obj.getDay() << "." << obj.getMonth() << "." << obj.getYear();
 	return stream;
 }
 
-std::ifstream& operator>>(std::ifstream& stream, Date& date)
+std::istream& operator>>(std::istream& stream, Date& obj)
 {
-	stream >> date.day >> date.month >> date.year;
+	unsigned short int day, month, year;
+	stream >> day; 
+	stream.ignore();
+	stream >> month; 
+	stream.ignore();
+	stream >> year;
+
+	obj.setYear(year);
+	obj.setMonth(month);
+	obj.setDay(day);
+
 	return stream;
 }
