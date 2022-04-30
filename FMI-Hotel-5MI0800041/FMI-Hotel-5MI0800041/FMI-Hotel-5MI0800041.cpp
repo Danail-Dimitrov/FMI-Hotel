@@ -2,10 +2,12 @@
 #include <fstream>
 #include "Date.h"
 #include "String.h"
+#include "Room.h"
 
 int main()
 {
-    String str;
-    std::cin >> str;
-    std::cout << str;
+    Room room;
+
+    std::cin >> room;
+    std::cout << room;
 }

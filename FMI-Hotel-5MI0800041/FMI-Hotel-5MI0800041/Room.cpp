@@ -1,6 +1,6 @@
 #include "Room.h"
 
-Room::Room(): id(0), numberOfBed(0)
+Room::Room(): id("NO_ID"), numberOfBed(0)
 {
 }
 

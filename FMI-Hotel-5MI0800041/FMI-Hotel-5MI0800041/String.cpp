@@ -1,4 +1,4 @@
-﻿#include "String.h"
+﻿ #include "String.h"
 #include "HelperController.h"
 #pragma warning(disable:4996)
 
@@ -12,6 +12,31 @@ void String::deleteMemory()
 {
 	delete[] this->data;
 	this->data = nullptr;
+}
+
+std::istream& String::read(char separator, int capacity, std::istream& stream)
+{
+	int size = 0;
+	char* arr = new char[capacity];
+	char crr;
+	stream.get(crr);
+	while (crr != separator && !stream.eof())
+	{
+		//+1 зада имам накрая място за \0
+		if (size + 1 == capacity)
+			HelperController::Resize(arr, capacity);
+
+		arr[size] = crr;
+		size++;
+		stream.get(crr);
+	}
+
+	arr[size] = '\0';
+
+	this->deleteMemory();
+	this->setData(arr);
+
+	return stream;
 }
 
 String::String()
@@ -58,29 +83,7 @@ std::ostream& operator<<(std::ostream& stream, const String& obj)
 	return stream;
 }
 
-//Оправи в бъдеще
 std::istream& operator>>(std::istream& stream, String& obj)
 {	
-	int capacity = 501;
-	int size = 0;
-	char* arr = new char[capacity];
-	char crr;
-	stream.get(crr);
-	while(crr != '\n' && !stream.eof())
-	{
-		//+1 зада имам накрая място за \0
-		if (size + 1 == capacity)
-			HelperController::Resize(arr, capacity);
-
-		arr[size] = crr;
-		size++;
-		stream.get(crr);
-	}
-
-	arr[size] = '\0';
-
-	obj.deleteMemory();
-	obj.setData(arr);
-
-	return stream;
+	return obj.read('\n', 500, stream);
 }

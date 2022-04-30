@@ -16,6 +16,8 @@ private:
 	/*!	Показателя data се променя да сочи към nullptr, за да не се хвърля грешка, ако метод се опита да промени паметта, към която той сочи преди изтриването
 	*/
 	void deleteMemory();
+
+	std::istream& read(char separator, int initialCapacity = 50, std::istream& stream = std::cin);
 public:
 	//Конструктори
 	//! Конструктор по подразбиране
