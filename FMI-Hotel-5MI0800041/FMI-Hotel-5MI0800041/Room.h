@@ -8,6 +8,7 @@ private:
 	//Член-данни:
 	String id;/*!< Номера на стаята */  
 	unsigned short int numberOfBed;/*!< Броя легла в стаята */
+	bool isOpen;/*!< Флаг показващ дали стъаята в момента е затворена */
 
 public:
 	//Конструктори:
@@ -16,11 +17,11 @@ public:
 	//! Конструктор с параметри
 	/*! 
 	*	Параметри:
-	*		- unsigned short int day
-	*		- unsigned short int month
-	*		- unsigned short int year
+	*		- String id
+	*		- unsigned short int numberOfBeds
+	*		- bool isOpen
 	*/
-	Room(String id, unsigned short int numberOfBed);
+	Room(const String& id, const unsigned short int numberOfBed, const bool isOpen);
 
 	//Селектори:
 	//!	Селектор за номер
@@ -35,6 +36,14 @@ public:
 	*		unsigned short int
 	*/
 	unsigned short int getNumberOfBed() const { return this->numberOfBed; }
+	//! Селектор за флаг за състояние
+	/*!	
+	*	Връща:
+	*		bool:
+	*		-	истина ако стаята е отворена
+	*		-	лъжа ако стаята е затворенас
+	*/
+	bool getIsOpen() const { return isOpen; }
 
 	//Оператори:
 	//!	Oператор <<

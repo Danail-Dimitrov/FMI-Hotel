@@ -1,24 +1,25 @@
 #include "Room.h"
 
-Room::Room(): id("NO_ID"), numberOfBed(0)
+Room::Room(): id("NO_ID"), numberOfBed(0), isOpen(0)
 {
 }
 
-Room::Room(String id, unsigned short int numberOfBed): id(id), numberOfBed(numberOfBed)
+Room::Room(const String& id, const unsigned short int numberOfBed, const bool isOpen): id(id), numberOfBed(numberOfBed), isOpen(isOpen)
 {
 }
 
 std::ostream& operator<<(std::ostream& stream, const Room& obj)
 {
-	stream << obj.getId() << " " << obj.getNumberOfBed();
+	stream << obj.getId() << " " << obj.getNumberOfBed() << " " << obj.getIsOpen();
 	return stream;
 }
 
 std::istream& operator>>(std::istream& stream, Room& obj)
 {
-	stream >> obj.id;
-	stream.ignore();
+	obj.id.get(' ', stream);
 	stream >> obj.numberOfBed;
+	stream.ignore();
+	stream >> obj.isOpen;
 
 	return stream;
 }

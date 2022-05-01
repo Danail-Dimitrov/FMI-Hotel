@@ -84,7 +84,7 @@ public:
 	*		- std::istream& stream\n
 	*		  Потокът от които се чете
 	*/
-	void get(const char separator = ' ', std::istream& stream = std::cin);
+	std::istream& get(const char separator = ' ', std::istream& stream = std::cin);
 	
 	//!	Деконструктор
 	~String();

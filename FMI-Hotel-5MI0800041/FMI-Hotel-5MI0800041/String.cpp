@@ -72,9 +72,9 @@ String& String::operator=(const String& other)
 	return *this;
 }
 
-void String::get(const char separator, std::istream& stream)
+std::istream& String::get(const char separator, std::istream& stream)
 {
-	read(separator, stream);
+	return read(separator, stream);
 }
 
 String::~String()

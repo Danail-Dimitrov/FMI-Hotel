@@ -82,7 +82,8 @@ Date::Date(const unsigned short int day, const unsigned short int month, const u
 
 std::ostream& operator<<(std::ostream& stream, const Date& obj)
 {
-	stream << obj.getDay() << "." << obj.getMonth() << "." << obj.getYear();
+	const char SEPARATOR = '/';
+	stream << obj.getDay() << SEPARATOR << obj.getMonth() << SEPARATOR << obj.getYear();
 	return stream;
 }
 
