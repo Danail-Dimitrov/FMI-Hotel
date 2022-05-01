@@ -1,6 +1,6 @@
 ﻿#include "Date.h"
 
-void Date::setDay(unsigned short int day)
+void Date::setDay(const unsigned short int day)
 {
 	if(day == 0)
 		throw "Invalid day!";
@@ -26,7 +26,7 @@ void Date::setDay(unsigned short int day)
 	this->day = day;
 }
 
-void Date::setMonth(unsigned short int month)
+void Date::setMonth(const unsigned short int month)
 {
 	if(month == 0 || month > 12)
 		throw "Invalid month!";
@@ -34,7 +34,7 @@ void Date::setMonth(unsigned short int month)
 	this->month = month;
 }
 
-void Date::setYear(unsigned short int year)
+void Date::setYear(const unsigned short int year)
 {
 	const unsigned short int MIN_YEAR = 2022;
 	const unsigned short int MAX_YEAR = 2050;
@@ -73,7 +73,7 @@ Date::Date(): day(0), month(0), year(0)
 
 //We are useing initializer lists because if setDay is called before setMonth and setYear the day
 //can not be set properly but the zeros indicate that they are not set so an exception can be thrown
-Date::Date(unsigned short int day, unsigned short int month, unsigned short int year) : day(0), month(0), year(0)
+Date::Date(const unsigned short int day, const unsigned short int month, const unsigned short int year) : day(0), month(0), year(0)
 {
 	setYear(year);
 	setMonth(month);

@@ -14,7 +14,7 @@ void String::deleteMemory()
 	this->data = nullptr;
 }
 
-std::istream& String::read(char separator, int capacity, std::istream& stream)
+std::istream& String::read(const char separator, std::istream& stream, int capacity)
 {
 	int size = 0;
 	char* arr = new char[capacity];
@@ -72,6 +72,11 @@ String& String::operator=(const String& other)
 	return *this;
 }
 
+void String::get(const char separator, std::istream& stream)
+{
+	read(separator, stream);
+}
+
 String::~String()
 {
 	deleteMemory();
@@ -85,5 +90,5 @@ std::ostream& operator<<(std::ostream& stream, const String& obj)
 
 std::istream& operator>>(std::istream& stream, String& obj)
 {	
-	return obj.read('\n', 500, stream);
+	return obj.read('\n', stream, 500);
 }

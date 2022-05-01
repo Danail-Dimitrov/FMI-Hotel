@@ -17,7 +17,22 @@ private:
 	*/
 	void deleteMemory();
 
-	std::istream& read(char separator, int initialCapacity = 50, std::istream& stream = std::cin);
+	//!	Метод за четене
+	/*!
+	*	Метод, които осъществява четене от даден поток (по подразбиране std::cin) до подаден разделител.
+	*
+	*	Параметри:
+	*		- char separator\n
+	*		  Символт до които се чете
+	*		- int initialCapacity\n
+	*		  Началната големина на масивът в, които се чете, той е саморазсширяващ се, тази променлива помага да се намали броя разсширявания. За думи ще започвам с 50 а за по дълъг тест с 500 символа
+	* 		- std::istream& stream\n
+	*		  Потокът от които се чете		
+	* 
+	*	Връща:
+	*		- std::istream&
+	*/
+	std::istream& read(const char separator, std::istream& stream = std::cin, int initialCapacity = 50);
 public:
 	//Конструктори
 	//! Конструктор по подразбиране
@@ -59,6 +74,17 @@ public:
 	*		- const String& other 
 	*/
 	String& operator=(const String& other);
+
+	//Методи:
+	//! Метод за четене до разделител
+	/*!	Дава възможност за четене до даден разелител (по подразбиране ' ') от дадеин поток (по подразбиране std::cin)
+	*	Параметри:
+	*		- const char separator\n
+	*		  Рзделителят до които се чете
+	*		- std::istream& stream\n
+	*		  Потокът от които се чете
+	*/
+	void get(const char separator = ' ', std::istream& stream = std::cin);
 	
 	//!	Деконструктор
 	~String();
@@ -78,7 +104,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& stream, const String& obj);
 	//!	Oператор >>
 	/*!
-	*	Приятелска функция с която извеждаме данните за стринг чрез поток
+	*	Приятелска функция с която четем от поток до нов ред 
 	*
 	*	Параметри:
 	*		- std::istream& stream

@@ -6,8 +6,7 @@
 
 int main()
 {
-    Room room;
-
-    std::cin >> room;
-    std::cout << room;
+    String str;
+    str.get();
+    std::cout << str;
 }

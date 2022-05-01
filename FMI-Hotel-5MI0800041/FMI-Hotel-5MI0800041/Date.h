@@ -26,7 +26,7 @@ public:
 	*		- unsigned short int month
 	*		- unsigned short int year
 	*/
-	Date(unsigned short int day, unsigned short int month, unsigned short int year);
+	Date(const unsigned short int day, const unsigned short int month, const unsigned short int year);
 
 	//Мутатори:
 	//!	Мутатор за ден
@@ -50,7 +50,7 @@ public:
 	*		- деня има стойност 0
 	*		  Нулата се ползва само, за да се покаже, че член-данната няма зададена стойност
 	*/
-	void setDay(unsigned short int day);
+	void setDay(const unsigned short int day);
 	//!	Мутатор за месец
 	/*!
 	*	Параметри:
@@ -62,7 +62,7 @@ public:
 	* 
 	*		- месеца има стойност по голяма от 12\n
 	*/
-	void setMonth(unsigned short int month);
+	void setMonth(const unsigned short int month);
 	//! Мутатор за година
 	/*!
 	*	Contains constants that determine the smallest and the biggest value that a year can have
@@ -75,7 +75,7 @@ public:
 	*		- year is outside of the allowed range\n
 	*		  The allowed range for the years is determined by the constants in the setter
 	*/
-	void setYear(unsigned short int year);
+	void setYear(const unsigned short int year);
 
 	//Селектори:
 	//!	Селектор за ден
