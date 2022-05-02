@@ -39,16 +39,63 @@ public:
 	RoomReservation(const String& roomId, const Date& startDate, const Date& endDate, const String& firstName, const String& lastName, const String& comment, const bool isActive);
 	
 	//Селектори:
-	//TO DO :: add doxy comments
+	//!	Селектор за номер
+	/*!
+	*	Връща:
+	*		String
+	*/
 	String getRoomId() const { return roomId; }
+	//!	Селектор за начална дата 
+	/*!
+	*	Връща:
+	*		Date
+	*/
 	Date getStartDate() const { return startDate; }
+	//!	Селектор за крайна дата 
+	/*!
+	*	Връща:
+	*		Date
+	*/
 	Date  getEndDate() const { return endDate; }
+	//!	Селектор за първо име
+	/*!
+	*	Връща:
+	*		String
+	*/
 	String getFirstName() const { return firstName; }
+	//!	Селектор за второ име
+	/*!
+	*	Връща:
+	*		String
+	*/
 	String getLastName() const { return lastName; }
+	//!	Селектор за коментар
+	/*!
+	*	Връща:
+	*		String
+	*/
 	String getComment() const { return comment; }
+	//!	Селектор за флаг за състояние
+	/*!
+	*	Връща:
+	*		bool 
+	*		- истина акорезервацията е активна
+	*		- лужа ако не е
+	*/
+	bool getIsActive() const { return isActive; }
 	
 	//Мутатори:
+	//!	Мутатор за флаг за състояние
+	/*!
+	*	Параметри:
+	*		- const bool isActive
+	*/
 	void setIsActive(const bool isActive);
+	//!	Мутатор за коментар
+	/*!
+	*	Параметри:
+	*		- const String& comment
+	*/
 	void setComment(const String& comment);
 
 	//Приятелски функции
