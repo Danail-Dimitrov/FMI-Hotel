@@ -30,7 +30,7 @@ void RoomReservation::setComment(const String& comment)
 	this->comment = comment;
 }
 
-std::ostream& operator<<(std::ostream& stream, const RoomReservation obj)
+std::ostream& operator<<(std::ostream& stream, const RoomReservation& obj)
 {
 	const char SEPARATOR = ' ';
 	// obj.getComment() е важно да е накрая, заради четенето
@@ -40,23 +40,21 @@ std::ostream& operator<<(std::ostream& stream, const RoomReservation obj)
 	return stream;
 }
 
-std::istream& operator>>(std::istream& stream, RoomReservation obj)
+std::istream& operator>>(std::istream& stream, RoomReservation& obj)
 {
-	//направи всички стрингове така
 	Date startDate, endDate;
 	obj.roomId.get(' ', stream);
-	stream.ignore(); 
 	stream >> startDate;
 	stream.ignore();
 	stream >> endDate; 
 	stream.ignore(); 
-	stream >> obj.firstName;
-	stream.ignore();
-	stream >> obj.lastName;
-	stream.ignore(); 
+	obj.firstName.get(' ', stream);
+	obj.lastName.get(' ', stream);
 	stream >> obj.isActive;
 	stream.ignore(); 
 	stream >> obj.comment;
+
+	obj.setTimePeriod(startDate, endDate);
 	
 	return stream;
 }
