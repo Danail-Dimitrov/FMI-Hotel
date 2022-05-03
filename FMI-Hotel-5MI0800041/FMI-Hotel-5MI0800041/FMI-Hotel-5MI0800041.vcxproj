@@ -140,15 +140,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FMI-Hotel-5MI0800041.cpp" />
     <ClCompile Include="HelperController.cpp" />
+    <ClCompile Include="IOController.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomReservation.cpp" />
     <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
+    <ClInclude Include="Engine.h" />
     <ClInclude Include="HelperController.h" />
+    <ClInclude Include="IOController.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomReservation.h" />
     <ClInclude Include="String.h" />
