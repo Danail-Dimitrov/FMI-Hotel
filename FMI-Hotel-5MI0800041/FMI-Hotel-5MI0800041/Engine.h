@@ -1,8 +1,25 @@
 ﻿#ifndef _ENGINE_H
 #define _ENGINE_H
-//Този клас използва Singleton. Ползваната информация за Singleton е намерана на адрес: https://refactoring.guru/design-patterns/singleton
-//Допълнителна информация, с която реших възникнали проблеми с имплементацията е намерена на адрес: https://stackoverflow.com/questions/1008019/c-singleton-design-pattern 
+#include <iostream>
+#include <fstream>
+#include "IOController.h"
+#include "String.h"
+#include "Room.h"
+#include "RoomReservation.h"
 class Engine
 {
+private:
+	//! Регистрация на гост
+	static void registerUser();
+
+	static Room getRoom(String id);
+
+	static bool isRoomAvailable(String fileNamse, Date startDaete, Date endDate);
+
+	static void writeReservationToFile(String fileName, const RoomReservation& reservation);
+
+public:
+	//Методи:
+	static void Run();
 };
 #endif

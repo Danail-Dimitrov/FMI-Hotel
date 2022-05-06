@@ -5,9 +5,9 @@
 #include "Room.h"
 #include "RoomReservation.h"
 #include "IOController.h"
+#include "Engine.h"
 
 int main()
 {
-	IOController ctrl = IOController::getInstance();
-	ctrl.test();
+	Engine::Run();
 }

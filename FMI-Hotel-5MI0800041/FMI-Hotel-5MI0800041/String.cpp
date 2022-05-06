@@ -14,7 +14,7 @@ void String::deleteMemory()
 	this->data = nullptr;
 }
 
-std::istream& String::read(const char separator, std::istream& stream, int capacity)
+std::istream& String::read(const char separator, std::istream& stream, unsigned capacity)
 {
 	int size = 0;
 	char* arr = new char[capacity];
@@ -24,7 +24,7 @@ std::istream& String::read(const char separator, std::istream& stream, int capac
 	{
 		//+1 зада имам накрая място за \0
 		if (size + 1 == capacity)
-			HelperController::Resize(arr, capacity);
+			HelperController::resize(arr, capacity);
 
 		arr[size] = crr;
 		size++;
@@ -70,6 +70,29 @@ String& String::operator=(const String& other)
 
 	copy(other);
 	return *this;
+}
+
+bool String::operator==(const String& other) const
+{
+	return strcmp(this->data, other.data) == 0;
+}
+
+String String::operator+(const String& other)
+{
+	unsigned thisLen = strlen(this->data);
+	unsigned otherLen = strlen(other.data);
+	unsigned newArrLen = thisLen + otherLen;
+	char* newArr = new char[newArrLen + 1];
+
+	for (size_t i = 0; i < thisLen; i++)
+		newArr[i] = this->getData()[i];
+
+	for (size_t i = 0; i < otherLen; i++)
+		newArr[i + thisLen] = other.getData()[i];
+
+	newArr[newArrLen] = '\0';
+	String result = String(newArr);
+	return result;
 }
 
 std::istream& String::get(const char separator, std::istream& stream)

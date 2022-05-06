@@ -32,7 +32,7 @@ private:
 	*	Връща:
 	*		- std::istream&
 	*/
-	std::istream& read(const char separator, std::istream& stream = std::cin, int initialCapacity = 50);
+	std::istream& read(const char separator, std::istream& stream = std::cin, unsigned initialCapacity = 50);
 public:
 	//Конструктори
 	//! Конструктор по подразбиране
@@ -74,6 +74,19 @@ public:
 	*		- const String& other 
 	*/
 	String& operator=(const String& other);
+	//! Оператор ==
+	/*!	Проверява дали два обекта са равни
+	*	Параметри:
+	*		- const String& other
+	*/
+	bool operator==  (const String& other) const;
+
+	//! Оператор +
+	/*!	Слепва друг обект към сегашният
+	*	Параметри:
+	*		- const String& other
+	*/
+	String operator+ (const String& other);
 
 	//Методи:
 	//! Метод за четене до разделител
@@ -85,6 +98,8 @@ public:
 	*		  Потокът от които се чете
 	*/
 	std::istream& get(const char separator = ' ', std::istream& stream = std::cin);
+
+	//void removeSpaces
 	
 	//!	Деконструктор
 	~String();

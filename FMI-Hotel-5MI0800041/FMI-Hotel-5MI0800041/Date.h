@@ -65,15 +65,15 @@ public:
 	void setMonth(const unsigned short int month);
 	//! Мутатор за година
 	/*!
-	*	Contains constants that determine the smallest and the biggest value that a year can have
+	*	Съдържа константи които задават максимална и минимална стойност за годината
 	* 
-	*	Parameters:
+	*	Параметри:
 	*		- unsigned short int year\n
-	*		  represents a year
+	*		  представлява година
 	* 
-	*	Exception will be thrown if:
+	*	Ще се хвърли грешка ако:
 	*		- year is outside of the allowed range\n
-	*		  The allowed range for the years is determined by the constants in the setter
+	*		  Определените стойностти за годината се определя от константите в метода
 	*/
 	void setYear(const unsigned short int year);
 

@@ -56,7 +56,7 @@ String IOController::readComment(std::istream& istream, std::ostream& ostream)
 	String input;
 	istream >> input;
 	if (input == "")
-		input = "NO_COMMENT";
+		input = "NO_COMmENT";
 
 	return input;
 }

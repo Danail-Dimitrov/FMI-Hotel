@@ -71,8 +71,6 @@ Date::Date(): day(0), month(0), year(0)
 {
 }
 
-//We are useing initializer lists because if setDay is called before setMonth and setYear the day
-//can not be set properly but the zeros indicate that they are not set so an exception can be thrown
 Date::Date(const unsigned short int day, const unsigned short int month, const unsigned short int year) : day(0), month(0), year(0)
 {
 	setYear(year);

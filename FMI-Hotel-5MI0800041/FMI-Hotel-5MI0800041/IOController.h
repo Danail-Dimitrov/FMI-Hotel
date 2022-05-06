@@ -1,27 +1,44 @@
 ﻿#ifndef _IOCONTROLLER_H
 #define _IOCONTROLLER_H
-//Този клас използва Singleton. Ползваната информация за Singleton е намерана на адрес: https://refactoring.guru/design-patterns/singleton
-//Допълнителна информация, с която реших възникнали проблеми с имплементацията е намерена на адрес: https://stackoverflow.com/questions/1008019/c-singleton-design-pattern 
+#include "String.h"
+#include "Date.h"
 class IOController
 {
-private:
-	//Член-данни:
-	//static IOController* instance;/*!< Поинтър към Singleton инстанция на класа */  
-
-	//Конструктори:
-	//! Конструктор по подразбиране
-	/*!	Той е private, защото класа имплементира Singleton и не трябва да можем да създаваме нови негови инстанции*/
-	IOController();
-
-	//! Оператор= 
-	//! /*!	Той е private, защото класа имплементира Singleton, ако го оставим може да се създаде нов от компилатора, това носи опасност да създадем копия на инстанцията*/
-	void operator=(const IOController& other);
 public:
-	//Селектори:
-	//! Селектор за инстанцията накласа
-	/*! Ако не е създадена инстация първо ще се създаде такава */
-	static IOController& getInstance();
+	//Методи:
+	// Методи за печатане:
+	//!Поздрав
+	/*! Изпечатва основното поздрава за програмата */
+	static void prindGreeting(std::ostream& stream = std::cout);
 
-	void test();
+	//!Основно меню
+	/*! Изпечатва основното меню, съдържащо командите за програмата */
+	static void printMenu(std::ostream& stream = std::cout);
+	
+	//!Изчиства конзолата
+	static void clearScreen();
+
+	//Методи за четене:
+	/*! Чете един символ, число, представляващо избраната команта
+	* Връща:
+	*		char -представляващо командата
+	* 
+	* Грешка ще се хвърли ако:
+	*	- Char command not valid\n
+	*	  Символът не е число или не е между 1 и 6 (има 6 команди)
+	*/
+	static char readMenuInput(std::istream& stream = std::cin);
+
+	/*! Чете номер на стая от даден поток
+	* Връща:
+	*		String - представляващо номер на стая
+	*/
+	static String readRoomId(std::istream& istream = std::cin, std::ostream& ostream = std::cout);
+
+	static Date readDate(String dateIndex, std::istream& istream = std::cin, std::ostream& ostream = std::cout);
+
+	static String readComment(std::istream& istream = std::cin, std::ostream& ostream = std::cout);
+
+	static String readName(String dateIndex, std::istream& istream = std::cin, std::ostream& ostream = std::cout);
 };
 #endif
