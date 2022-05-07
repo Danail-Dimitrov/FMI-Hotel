@@ -3,7 +3,7 @@
 void RoomReservation::setTimePeriod(const Date& startDate, const Date& endDate)
 {
 	if(startDate > endDate)
-		throw "The startDate must be before the endDate!";
+		throw std::exception("The startDate must be before the endDate!");
 
 	this->startDate = startDate;
 	this->endDate = endDate;

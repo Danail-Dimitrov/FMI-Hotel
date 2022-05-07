@@ -3,25 +3,25 @@
 void Date::setDay(const unsigned short int day)
 {
 	if(day == 0)
-		throw "Invalid day!";
+		throw std::exception("Invalid day!");
 	
 	//Трябва да има зададена стойност на член-данните month(месец) и year(година), за да може да се провери коректността на стойността, която искаме да зададем на член-данната day (ден)
 	//Конструкторите използват стойността 0, за да маркират, че на дадена член-данна няма зададена стойност
 	if(this->year == 0)
-		throw "Year not set";
+		throw std::exception("Year not set");
 
 	if(this->month == 0)
-		throw "Month not set";
+		throw std::exception("Month not set");
 
 	//Израза на ред 17, които проверя дали една година е високосна, е направен на база информацията от страницата: https://www.mathsisfun.com/leap-years.html
 	bool isLeapYear = (this->year % 4 == 0 && this->year % 100 != 0) || this->year % 400 == 0;
 
 	if(this->month == 2 && day > 28 + isLeapYear)
-		throw "Invalid day!";
+		throw std::exception("Invalid day!");
 	else if((this->month == 4 || this->month == 6 || this->month == 9 || this->month == 11) && day > 30)
-		throw "Invalid day!";
+		throw std::exception("Invalid day!");
 	else if (day > 31)
-		throw "Invalid day!";
+		throw std::exception("Invalid day!");
 
 	this->day = day;
 }
@@ -29,7 +29,7 @@ void Date::setDay(const unsigned short int day)
 void Date::setMonth(const unsigned short int month)
 {
 	if(month == 0 || month > 12)
-		throw "Invalid month!";
+		throw std::exception("Invalid month!");
 
 	this->month = month;
 }
@@ -40,7 +40,7 @@ void Date::setYear(const unsigned short int year)
 	const unsigned short int MAX_YEAR = 2050;
 
 	if(year < MIN_YEAR || year > MAX_YEAR)
-		throw "Invalid year!";
+		throw std::exception("Invalid year!");
 
 	this->year = year;
 }

@@ -10,18 +10,18 @@ void Engine::registerUser()
 	Room room = getRoom(id);
 
 	if(!room.getIsOpen())
-		throw "Room is closed!";
+		throw std::exception("Room is closed!");
 
 	Date startDate = IOController::readDate("first");
 	Date endDate = IOController::readDate("second");
 
 	if(startDate > endDate)
-		throw "Start date must be before end date!";
+		throw std::exception("Start date must be before end date!");
 
 	String fileName = id + "_reservations.txt";
 
 	if(!isRoomAvailable(fileName, startDate, endDate))
-		throw "Room not available!";
+		throw std::exception("Room not available!");
 
 	String comment = IOController::readComment();	
 
@@ -38,7 +38,7 @@ Room Engine::getRoom(String id)
 	std::ifstream ifs("rooms.txt");
 
 	if (!ifs.good())
-		throw "File problem!";
+		throw std::exception("File problem!");
 	
 	while(!ifs.eof())
 	{
@@ -51,27 +51,31 @@ Room Engine::getRoom(String id)
 		}
 	}
 
-	throw "Room does not exist!";
+	throw std::exception("Room does not exist!");
 }
 
-bool Engine::isRoomAvailable(String fileName, Date startDaete, Date endDate)
+bool Engine::isRoomAvailable(String reservationsFileName, Date startDaete, Date endDate)
 {
-	std::ofstream ofs(fileName.getData());
-	if (!ofs.is_open())
-		throw "File problem!";
+	//ако не съществува файла тоав ще го създаде
+	std::ofstream ofs(reservationsFileName.getData(), std::ios::app);
+	if (!ofs.good())
+		throw std::exception("File problem!");
 	ofs.close();
 
-	std::ifstream ifs(fileName.getData());
+	std::ifstream ifs(reservationsFileName.getData());
 
-	if (!ifs.is_open())
-		throw "File problem!";
+	if (!ifs.good())
+		throw std::exception("File problem!");
 	ifs.peek();
 	while(!ifs.eof())
 	{
 		RoomReservation crrReservation;
 		ifs >> crrReservation;
-		if (!(crrReservation.getStartDate() < endDate && crrReservation.getEndDate() > startDaete) && crrReservation.getIsActive())
+		if (crrReservation.getStartDate() < endDate && crrReservation.getEndDate() > startDaete && crrReservation.getIsActive())
 			return false;
+		
+		//Има символ за нов ред
+		ifs.ignore();
 	}
 
 	return true;
@@ -81,11 +85,42 @@ void Engine::writeReservationToFile(String fileName, const RoomReservation& rese
 {
 	std::ofstream ofs((reservation.getRoomId() + "_reservations.txt").getData(), std::ios::app);
 	if(!ofs.good())
-		throw "File problem!";
+		throw std::exception("File problem!");
 
-	ofs << reservation;
+	ofs << reservation << std::endl;
 
 	ofs.close();
+}
+
+void Engine::findFreeRooms()
+{
+	Date desieredDate = IOController::readDate("desired");
+
+	IOController::printFreeRoomsStartMsg(desieredDate);
+
+	std::ifstream roomsFile("rooms.txt");
+	if(!roomsFile.good())
+		throw std::exception("File problem!");
+
+	int roomsPrinted = 0;
+
+	while (!roomsFile.eof())
+	{
+		Room crrRoom;
+		roomsFile >> crrRoom;
+		String fileName = crrRoom.getId() + "_reservations.txt";
+		if(crrRoom.getIsOpen() && isRoomAvailable(fileName, desieredDate, desieredDate))
+		{
+				IOController::printNthRoom(crrRoom, roomsPrinted + 1);
+				++roomsPrinted;			
+		}		
+
+		//Във файла има нов ред след всяка стая
+		roomsFile.ignore();
+	}
+
+	if (roomsPrinted == 0)
+		IOController::printNoRoomsMsg();
 }
 
 void Engine::Run()
@@ -95,17 +130,28 @@ void Engine::Run()
 	char command = 'a';
 	while (command != '0')
 	{
-		IOController::printMenu();
-		command = IOController::readMenuInput();
-
-		switch(command)
+		try
 		{
-		case '1':
-			registerUser();
-		default:
-			break;
-		}
+			IOController::printMenu();
+			command = IOController::readMenuInput();
 
-		IOController::clearScreen();
+			switch (command)
+			{
+			case '1':
+				registerUser();
+			case '2':
+				findFreeRooms();
+			default:
+				break;
+			}
+
+
+
+			IOController::clearScreen();
+		}
+		catch (const std::exception& ex)
+		{
+			std::cout << "Exception: " << ex.what() << std::endl;
+		}
 	}
 }

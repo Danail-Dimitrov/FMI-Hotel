@@ -14,9 +14,11 @@ private:
 
 	static Room getRoom(String id);
 
-	static bool isRoomAvailable(String fileNamse, Date startDaete, Date endDate);
+	static bool isRoomAvailable(String reservationsFileName, Date startDaete, Date endDate);
 
 	static void writeReservationToFile(String fileName, const RoomReservation& reservation);
+
+	static void findFreeRooms();
 
 public:
 	//Методи:

@@ -2,6 +2,7 @@
 #define _IOCONTROLLER_H
 #include "String.h"
 #include "Date.h"
+#include "Room.h"
 class IOController
 {
 public:
@@ -18,6 +19,14 @@ public:
 	//!Изчиства конзолата
 	static void clearScreen();
 
+	static void printFreeRoomsStartMsg(Date date, std::ostream& stream = std::cout);
+
+	static void printNthRoom(Room room, int n, std::ostream& stream = std::cout);
+
+	static void printNoRoomsMsg(std::ostream& stream = std::cout);
+
+	static void printContrinueMsg(std::ostream& stream = std::cout);
+
 	//Методи за четене:
 	/*! Чете един символ, число, представляващо избраната команта
 	* Връща:
@@ -29,13 +38,15 @@ public:
 	*/
 	static char readMenuInput(std::istream& stream = std::cin);
 
+	static void readAnyKey(std::istream& stream = std::cin);
+
 	/*! Чете номер на стая от даден поток
 	* Връща:
 	*		String - представляващо номер на стая
 	*/
 	static String readRoomId(std::istream& istream = std::cin, std::ostream& ostream = std::cout);
 
-	static Date readDate(String dateIndex, std::istream& istream = std::cin, std::ostream& ostream = std::cout);
+	static Date readDate(String dateName, std::istream& istream = std::cin, std::ostream& ostream = std::cout);
 
 	static String readComment(std::istream& istream = std::cin, std::ostream& ostream = std::cout);
 

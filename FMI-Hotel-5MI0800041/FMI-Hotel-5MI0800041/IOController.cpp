@@ -11,6 +11,7 @@ void IOController::printMenu(std::ostream& stream)
 {
 	stream << "Menu: \nEnter the number for the command you would like to be executed!" << std::endl;
 	stream << "1. Register a guest.\n";
+	stream << "2. Get free rooms at a given date\n";
 }
 
 void IOController::clearScreen()
@@ -19,17 +20,44 @@ void IOController::clearScreen()
 	system("cls");
 }
 
+void IOController::printFreeRoomsStartMsg(Date date, std::ostream& stream)
+{
+	stream << "Free rooms at " << date << " are:\n";
+}
+
+void IOController::printNthRoom(Room room, int n, std::ostream& stream)
+{
+	stream << n << ". " << room;
+}
+
+void IOController::printNoRoomsMsg(std::ostream& stream)
+{
+	stream << "No free rooms!";
+}
+
+void IOController::printContrinueMsg(std::ostream& stream)
+{
+	stream << "Enter any key to continue!\n";
+}
+
 char IOController::readMenuInput(std::istream& stream)
 {
 	char input;
-	stream >> input;
+	input = stream.get();
 
 	stream.ignore();
 
 	if (input < '0' || input > '6')
-		throw "Char command not valid";
+		throw std::exception("Char command not valid");
 
 	return input;
+}
+
+void IOController::readAnyKey(std::istream& stream)
+{
+	stream.get();
+	//Разкоментирай ако реве
+	//stream.ignore();
 }
 
 String IOController::readRoomId(std::istream& istream, std::ostream& ostream)
@@ -41,12 +69,12 @@ String IOController::readRoomId(std::istream& istream, std::ostream& ostream)
 	return input;
 }
 
-Date IOController::readDate(String dateIndex, std::istream& istream, std::ostream& ostream)
+Date IOController::readDate(String dateName, std::istream& istream, std::ostream& ostream)
 {
-	ostream << "Enter the " << dateIndex << " date:\n";
+	ostream << "Enter the " << dateName << " date: (In format d.m.yyyy)\n";
 	Date input;
 	istream >> input;
-	istream.ignore();
+	istream.ignore(); 
 	return input;
 }
 
