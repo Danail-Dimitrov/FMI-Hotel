@@ -139,13 +139,16 @@ void Engine::Run()
 			{
 			case '1':
 				registerUser();
+				break;
 			case '2':
 				findFreeRooms();
+				break;
 			default:
 				break;
 			}
 
-
+			IOController::printContrinueMsg();
+			IOController::readAnyKey();
 
 			IOController::clearScreen();
 		}

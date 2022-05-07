@@ -27,12 +27,12 @@ void IOController::printFreeRoomsStartMsg(Date date, std::ostream& stream)
 
 void IOController::printNthRoom(Room room, int n, std::ostream& stream)
 {
-	stream << n << ". " << room;
+	stream << n << ". " << room << "\n";
 }
 
 void IOController::printNoRoomsMsg(std::ostream& stream)
 {
-	stream << "No free rooms!";
+	stream << "No free rooms!\n";
 }
 
 void IOController::printContrinueMsg(std::ostream& stream)
@@ -56,8 +56,6 @@ char IOController::readMenuInput(std::istream& stream)
 void IOController::readAnyKey(std::istream& stream)
 {
 	stream.get();
-	//Разкоментирай ако реве
-	//stream.ignore();
 }
 
 String IOController::readRoomId(std::istream& istream, std::ostream& ostream)
@@ -80,7 +78,7 @@ Date IOController::readDate(String dateName, std::istream& istream, std::ostream
 
 String IOController::readComment(std::istream& istream, std::ostream& ostream)
 {
-	ostream << "Do you want to add a comment to the reservation?: (if no press enter)" << std::endl;
+	ostream << "Do you want to add a comment to the reservation?: (if no press enter)\n" << std::endl;
 	String input;
 	istream >> input;
 	if (input == "")

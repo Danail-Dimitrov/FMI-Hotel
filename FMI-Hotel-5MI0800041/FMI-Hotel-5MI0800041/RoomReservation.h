@@ -51,7 +51,7 @@ public:
 	*		Date
 	*/
 	Date getStartDate() const { return startDate; }
-	//!	Селектор за крайна дата 
+	//!	Селектор за край+на дата 
 	/*!
 	*	Връща:
 	*		Date
