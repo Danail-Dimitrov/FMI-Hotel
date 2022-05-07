@@ -12,13 +12,13 @@ void Engine::registerUser()
 	if(!room.getIsOpen())
 		throw std::exception("Room is closed!");
 
-	Date startDate = IOController::readDate("first");
-	Date endDate = IOController::readDate("second");
+	Date startDate = IOController::readDate("the first");
+	Date endDate = IOController::readDate("the second");
 
 	if(startDate > endDate)
 		throw std::exception("Start date must be before end date!");
 
-	String fileName = id + "_reservations.txt";
+	String fileName = buildReservationFileName(id);
 
 	if(!isRoomAvailable(fileName, startDate, endDate))
 		throw std::exception("Room not available!");
@@ -57,10 +57,7 @@ Room Engine::getRoom(String id)
 bool Engine::isRoomAvailable(String reservationsFileName, Date startDaete, Date endDate)
 {
 	//ако не съществува файла тоав ще го създаде
-	std::ofstream ofs(reservationsFileName.getData(), std::ios::app);
-	if (!ofs.good())
-		throw std::exception("File problem!");
-	ofs.close();
+	createReservationsFile(reservationsFileName);
 
 	std::ifstream ifs(reservationsFileName.getData());
 
@@ -83,7 +80,7 @@ bool Engine::isRoomAvailable(String reservationsFileName, Date startDaete, Date 
 
 void Engine::writeReservationToFile(String fileName, const RoomReservation& reservation)
 {
-	std::ofstream ofs((reservation.getRoomId() + "_reservations.txt").getData(), std::ios::app);
+	std::ofstream ofs((buildReservationFileName(reservation.getRoomId())).getData(), std::ios::app);
 	if(!ofs.good())
 		throw std::exception("File problem!");
 
@@ -94,7 +91,7 @@ void Engine::writeReservationToFile(String fileName, const RoomReservation& rese
 
 void Engine::findFreeRooms()
 {
-	Date desieredDate = IOController::readDate("desired");
+	Date desieredDate = IOController::readDate("the desired");
 
 	IOController::printFreeRoomsStartMsg(desieredDate);
 
@@ -108,7 +105,7 @@ void Engine::findFreeRooms()
 	{
 		Room crrRoom;
 		roomsFile >> crrRoom;
-		String fileName = crrRoom.getId() + "_reservations.txt";
+		String fileName = buildReservationFileName(crrRoom.getId());
 		if(crrRoom.getIsOpen() && isRoomAvailable(fileName, desieredDate, desieredDate))
 		{
 				IOController::printNthRoom(crrRoom, roomsPrinted + 1);
@@ -123,9 +120,42 @@ void Engine::findFreeRooms()
 		IOController::printNoRoomsMsg();
 }
 
+void Engine::freeRoom()
+{
+	String id = IOController::readRoomId();
+	Room room = getRoom(id);
+
+	String fileName = buildReservationFileName(id);
+
+	if(isRoomAvailable(fileName, today, today))
+		throw std::exception("Room is not in use!");
+
+	
+}
+
+void Engine::createReservationsFile(String fileName)
+{
+	std::ofstream ofs(fileName.getData(), std::ios::app);
+	if(!ofs.good())
+		throw std::exception("File problem!");
+	ofs.close();
+}
+
+String Engine::buildReservationFileName(String roomId)
+{
+	return roomId + "_reservations.txt";
+}
+
+Date Engine::getReservationForCurrentDate(String fileName)
+{
+
+	return Date();
+}
+
 void Engine::Run()
 {
 	IOController::prindGreeting();
+	today = IOController::readDate("todays");
 	//Задавам стойност а за да съм сигурен че няма да е нула в началото
 	char command = 'a';
 	while (command != '0')
@@ -142,6 +172,9 @@ void Engine::Run()
 				break;
 			case '2':
 				findFreeRooms();
+				break;
+			case '3':
+				freeRoom();
 				break;
 			default:
 				break;

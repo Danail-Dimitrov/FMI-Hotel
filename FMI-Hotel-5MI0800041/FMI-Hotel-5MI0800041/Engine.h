@@ -9,6 +9,8 @@
 class Engine
 {
 private:
+	static Date today;
+
 	//! Регистрация на гост
 	static void registerUser();
 
@@ -19,6 +21,14 @@ private:
 	static void writeReservationToFile(String fileName, const RoomReservation& reservation);
 
 	static void findFreeRooms();
+
+	static void freeRoom();
+
+	static void createReservationsFile(String fileName);
+
+	static String buildReservationFileName(String roomId);
+
+	static Date getReservationForCurrentDate(String fileName);
 
 public:
 	//Методи:
