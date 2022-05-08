@@ -98,6 +98,10 @@ public:
 	*/
 	void setComment(const String& comment);
 
+	bool operator== (const RoomReservation& other);
+
+	bool operator!= (const RoomReservation& other);
+
 	//Приятелски функции
 	friend std::ostream& operator<<(std::ostream& stream, const RoomReservation& obj);
 	friend std::istream& operator>>(std::istream& stream, RoomReservation& obj);

@@ -1,5 +1,7 @@
 ﻿#include "Engine.h"
 
+Date Engine::today;
+
 void Engine::registerUser()
 {
 	String id = IOController::readRoomId();
@@ -130,7 +132,41 @@ void Engine::freeRoom()
 	if(isRoomAvailable(fileName, today, today))
 		throw std::exception("Room is not in use!");
 
-	
+	RoomReservation reservation = getReservationForDate(fileName, today);
+
+	reservation.setIsActive(0);
+
+	std::ifstream ifs(fileName.getData());
+	if (!ifs.good())
+		throw std::exception("File problem!");
+
+	ifs.seekg(0, std::ios::end);
+	int reservationsCount = ifs.tellg() / sizeof(RoomReservation);
+	ifs.seekg(0, std::ios::beg);
+	RoomReservation* reservations = new RoomReservation[reservationsCount];
+
+	int index = 0;
+	while(!ifs.eof())
+	{
+		RoomReservation crrReservation;
+		ifs >> crrReservation;
+		if (crrReservation != reservation)
+			reservations[index++] = crrReservation;
+		else
+			reservations[index++] = reservation;
+	}
+
+	ifs.close();
+
+	//Не използвам функцията writeReservationToFile, защото тя отваря и затваря потока за всяка една резерваци, така хасби време излишно
+	std::ofstream ofs(fileName.getData());
+	if (!ofs.good())
+		throw std::exception("File problem!");
+
+	for (size_t i = 0; i < index - 1; i++)
+		ofs << reservations[i];
+
+	ofs.close();
 }
 
 void Engine::createReservationsFile(String fileName)
@@ -146,10 +182,20 @@ String Engine::buildReservationFileName(String roomId)
 	return roomId + "_reservations.txt";
 }
 
-Date Engine::getReservationForCurrentDate(String fileName)
+RoomReservation Engine::getReservationForDate(String fileName, Date date)
 {
-
-	return Date();
+	std::ifstream ifs(fileName.getData());
+	if (!ifs.good())
+		throw std::exception("File problem!");
+	RoomReservation crrReservation;
+	while (!ifs.eof() && !(crrReservation.getStartDate() < date && date < crrReservation.getEndDate()))
+	{		
+		ifs >> crrReservation;
+		//Има символ за нов ред
+		ifs.ignore();
+	}
+	ifs.close();
+	return RoomReservation();
 }
 
 void Engine::Run()

@@ -28,7 +28,7 @@ private:
 
 	static String buildReservationFileName(String roomId);
 
-	static Date getReservationForCurrentDate(String fileName);
+	static RoomReservation getReservationForDate(String fileName, Date date);
 
 public:
 	//Методи:
