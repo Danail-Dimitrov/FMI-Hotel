@@ -149,6 +149,10 @@ public:
 	*		- false\n
 	*		  ако датите са еднакви
 	*/
+	bool operator <= (const Date& other) const;
+
+	bool operator >= (const Date& other) const;
+
 	bool operator!= (const Date& other) const;
 
 	//!	Oператор <<

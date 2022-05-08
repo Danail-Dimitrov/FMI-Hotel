@@ -9,12 +9,5 @@
 
 int main()
 {
-	std::ifstream ifs("rooms.txt");
-	if (!ifs.good())
-		throw std::exception("File problem!");
-	ifs.seekg(0, std::ios::end);
-	int roomsCount = ifs.tellg();
-	ifs.seekg(0, std::ios::beg);
-	std::cout << (roomsCount / sizeof(Room));
-	//Engine::Run();
+	Engine::Run();
 }

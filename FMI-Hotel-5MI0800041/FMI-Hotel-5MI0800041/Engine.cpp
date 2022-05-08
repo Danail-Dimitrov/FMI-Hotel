@@ -70,7 +70,7 @@ bool Engine::isRoomAvailable(String reservationsFileName, Date startDaete, Date 
 	{
 		RoomReservation crrReservation;
 		ifs >> crrReservation;
-		if (crrReservation.getStartDate() < endDate && crrReservation.getEndDate() > startDaete && crrReservation.getIsActive())
+		if (crrReservation.getStartDate() <= endDate && crrReservation.getEndDate() >= startDaete && crrReservation.getIsActive())
 			return false;
 		
 		//Има символ за нов ред
@@ -140,13 +140,12 @@ void Engine::freeRoom()
 	if (!ifs.good())
 		throw std::exception("File problem!");
 
-	ifs.seekg(0, std::ios::end);
-	int reservationsCount = ifs.tellg() / sizeof(RoomReservation);
-	ifs.seekg(0, std::ios::beg);
+	unsigned reservationsCount = getReservationsInFile(ifs);
 	RoomReservation* reservations = new RoomReservation[reservationsCount];
 
 	int index = 0;
-	while(!ifs.eof())
+	//Има нов ред накрая на файла и eof не връща истина когато трябва
+	while(index < reservationsCount)
 	{
 		RoomReservation crrReservation;
 		ifs >> crrReservation;
@@ -159,7 +158,7 @@ void Engine::freeRoom()
 	ifs.close();
 
 	//Не използвам функцията writeReservationToFile, защото тя отваря и затваря потока за всяка една резерваци, така хасби време излишно
-	std::ofstream ofs(fileName.getData());
+	std::ofstream ofs(fileName.getData(), std::ios::trunc);
 	if (!ofs.good())
 		throw std::exception("File problem!");
 
@@ -177,6 +176,14 @@ void Engine::createReservationsFile(String fileName)
 	ofs.close();
 }
 
+unsigned Engine::getReservationsInFile(std::ifstream& ifs)
+{
+	ifs.seekg(0, std::ios::end);
+	unsigned reservationsCount = ifs.tellg() / sizeof(RoomReservation);
+	ifs.seekg(0, std::ios::beg);
+	return reservationsCount;
+}
+
 String Engine::buildReservationFileName(String roomId)
 {
 	return roomId + "_reservations.txt";
@@ -188,14 +195,16 @@ RoomReservation Engine::getReservationForDate(String fileName, Date date)
 	if (!ifs.good())
 		throw std::exception("File problem!");
 	RoomReservation crrReservation;
-	while (!ifs.eof() && !(crrReservation.getStartDate() < date && date < crrReservation.getEndDate()))
+	unsigned reservationsCount = getReservationsInFile(ifs);
+	unsigned count = 0;
+	//Има нов ред накрая на файла и eof не връща истина когато трябва
+	while (count <= reservationsCount && !(crrReservation.getStartDate() <= date && date <= crrReservation.getEndDate()))
 	{		
 		ifs >> crrReservation;
-		//Има символ за нов ред
-		ifs.ignore();
+		count++;
 	}
 	ifs.close();
-	return RoomReservation();
+	return crrReservation;
 }
 
 void Engine::Run()

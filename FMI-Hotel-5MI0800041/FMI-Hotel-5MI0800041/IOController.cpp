@@ -11,7 +11,8 @@ void IOController::printMenu(std::ostream& stream)
 {
 	stream << "Menu: \nEnter the number for the command you would like to be executed!" << std::endl;
 	stream << "1. Register a guest.\n";
-	stream << "2. Get free rooms at a given date\n";
+	stream << "2. Get free rooms at a given date.\n";
+	stream << "3. Free room.\n";
 }
 
 void IOController::clearScreen()
@@ -69,7 +70,7 @@ String IOController::readRoomId(std::istream& istream, std::ostream& ostream)
 
 Date IOController::readDate(String dateName, std::istream& istream, std::ostream& ostream)
 {
-	ostream << "Enter the " << dateName << " date: (In format d.m.yyyy)\n";
+	ostream << "Enter " << dateName << " date: (In format d.m.yyyy)\n";
 	Date input;
 	istream >> input;
 	istream.ignore(); 
@@ -78,7 +79,7 @@ Date IOController::readDate(String dateName, std::istream& istream, std::ostream
 
 String IOController::readComment(std::istream& istream, std::ostream& ostream)
 {
-	ostream << "Do you want to add a comment to the reservation?: (if no press enter)\n" << std::endl;
+	ostream << "Do you want to add a comment to the reservation?: (if no press enter)\n";
 	String input;
 	istream >> input;
 	if (input == "")

@@ -30,13 +30,13 @@ void RoomReservation::setComment(const String& comment)
 	this->comment = comment;
 }
 
-bool RoomReservation::operator==(const RoomReservation& other)
+bool RoomReservation::operator==(const RoomReservation& other) const
 {
 	//Другите не трябва да се сравнят, защото програмта не допуска на две резервации с еднакви член-данни, каквито се сравняват
 	return this->getRoomId() == other.getRoomId() && this->getStartDate() == other.getStartDate() &&  this->getEndDate() == other.getEndDate();
 }
 
-bool RoomReservation::operator!=(const RoomReservation& other)
+bool RoomReservation::operator!=(const RoomReservation& other) const
 {
 	return !(*this == other);
 }

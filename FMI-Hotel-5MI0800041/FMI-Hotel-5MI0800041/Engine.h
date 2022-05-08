@@ -26,6 +26,8 @@ private:
 
 	static void createReservationsFile(String fileName);
 
+	static unsigned getReservationsInFile(std::ifstream& ifs);
+
 	static String buildReservationFileName(String roomId);
 
 	static RoomReservation getReservationForDate(String fileName, Date date);

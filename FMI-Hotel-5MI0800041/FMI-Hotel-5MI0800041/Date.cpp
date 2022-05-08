@@ -62,6 +62,16 @@ bool Date::operator==(const Date& other) const
 	return this->getYear() == other.getYear() && this->getMonth() == other.getMonth() && this->getDay() == other.getDay();
 }
 
+bool Date::operator<=(const Date& other) const
+{
+	return *this < other || *this == other;
+}
+
+bool Date::operator>=(const Date& other) const
+{
+	return *this > other || *this == other;
+}
+
 bool Date::operator!=(const Date& other) const
 {
 	return !(*this == other);

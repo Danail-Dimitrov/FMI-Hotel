@@ -98,9 +98,9 @@ public:
 	*/
 	void setComment(const String& comment);
 
-	bool operator== (const RoomReservation& other);
+	bool operator== (const RoomReservation& other) const;
 
-	bool operator!= (const RoomReservation& other);
+	bool operator!= (const RoomReservation& other) const;
 
 	//Приятелски функции
 	friend std::ostream& operator<<(std::ostream& stream, const RoomReservation& obj);
