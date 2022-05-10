@@ -2,6 +2,7 @@
 #define _HELPER_CONTROLLER_H
 #include <iostream>
 #include "String.h"
+#include "Date.h"
 
 class HelperController
 {
@@ -19,5 +20,13 @@ public:
 	static void resize(char* arr, unsigned& size, int multiplier = 2);
 
 	static String convertNumToChar(long number);
+
+	static Date getLaterDate(const Date& date1, const Date& date2);
+
+	static Date getEarlierDate(const Date& date1, const Date& date2);
+
+	static bool doTimePeriodsCross(const Date& date1Start, const Date& date1End, const Date& date2Start, const Date& date2End);
+
+	static void reverse(char* arr);
 };
 #endif

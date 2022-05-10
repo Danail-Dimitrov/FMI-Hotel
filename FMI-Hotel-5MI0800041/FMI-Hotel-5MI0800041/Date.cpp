@@ -73,22 +73,22 @@ bool Date::operator!=(const Date& other) const
 	return !(*this == other);
 }
 
-bool Date::isLeapYear(unsigned short year)
+bool Date::isLeapYear(unsigned short year) const
 {
 	return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
 }
 
-unsigned Date::getDaysInMonth(unsigned short month, unsigned short year)
+unsigned Date::getDaysInMonth(unsigned short month, unsigned short year) const
 {
 	if (month == 2)
 		return 28 + isLeapYear(year);
-	if (this->month == 4 || this->month == 6 || this->month == 9 || this->month == 11)
+	if (month == 4 || month == 6 || month == 9 || month == 11)
 		return 30;
 
 	return 31;
 }
 
-unsigned Date::operator-(const Date& other)
+unsigned Date::operator-(const Date& other) const
 {
 	if (*this < other)
 		throw std::exception("First date must be greater!");

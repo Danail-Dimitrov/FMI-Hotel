@@ -9,8 +9,5 @@
 
 int main()
 {
-	Date date1 = Date(1, 1, 2023);
-	Date date2 = Date(31, 12, 2023);
-	std::cout << date2 - date1;
-	//Engine::Run();
+	Engine::Run();
 }

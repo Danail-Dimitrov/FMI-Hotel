@@ -12,9 +12,9 @@ private:
 	unsigned short month;/*!< Месеца на датата */  
 	unsigned short year;/*!< Годината на датата */  
 
-	bool isLeapYear(unsigned short year);
+	bool isLeapYear(unsigned short year) const;
 
-	unsigned getDaysInMonth(unsigned short month, unsigned short year);
+	unsigned getDaysInMonth(unsigned short month, unsigned short year) const;
 public:
 	//Конструктори:
 	//!	Конструктор по подразбиране
@@ -188,6 +188,6 @@ public:
 	*/
 	friend std::istream& operator>> (std::istream& stream, Date& obj);
 
-	unsigned operator- (const Date& other);
+	unsigned operator- (const Date& other) const;
 };
 #endif 

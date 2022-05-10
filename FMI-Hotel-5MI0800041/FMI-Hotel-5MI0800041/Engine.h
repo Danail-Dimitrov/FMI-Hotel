@@ -15,11 +15,11 @@ private:
 	//! Регистрация на гост
 	static void registerUser();
 
-	static Room getRoom(String id);
+	static Room getRoom(const String& id);
 
-	static bool isRoomAvailable(String reservationsFileName, Date startDaete, Date endDate);
+	static bool isRoomAvailable(const String& reservationsFileName, const Date& startDaete, const Date& endDate);
 
-	static void writeReservationToFile(String fileName, const RoomReservation& reservation);
+	static void writeReservationToFile(const String& fileName, const RoomReservation& reservation);
 
 	static void findFreeRooms();
 
@@ -27,19 +27,19 @@ private:
 
 	static void getReport();
 
-	static void getReportForRoom(Room room, Date startDate, Date endDate);
+	static void getReportForRoom(const Room& room, const Date& startDate, const Date& endDate);
 
-	static void createReservationsFile(String fileName);
+	static void createReservationsFile(const String& fileName);
 
 	static unsigned getReservationsInFile(std::ifstream& ifs);
 
-	static String getReportFileName(Date date);
+	static String getReportFileName(const Date& date);
 
-	static String buildReservationFileName(String roomId);
+	static String buildReservationFileName(const String& roomId);
 
-	static RoomReservation getReservationForDate(String fileName, Date date);
+	static RoomReservation getReservationForDate(const String& fileName, const Date& date);
 
-	static unsigned daysInUse(RoomReservation reservation, Date firstDate, Date secondDate);
+	static unsigned daysInUse(const RoomReservation& reservation, const Date& firstDate, const Date& secondDate);
 
 public:
 	//Методи:

@@ -13,6 +13,7 @@ void IOController::printMenu(std::ostream& stream)
 	stream << "1. Register a guest.\n";
 	stream << "2. Get free rooms at a given date.\n";
 	stream << "3. Free room.\n";
+	stream << "4. Get report.\n";
 }
 
 void IOController::clearScreen()

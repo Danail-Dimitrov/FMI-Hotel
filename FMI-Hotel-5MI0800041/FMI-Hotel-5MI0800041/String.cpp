@@ -39,7 +39,7 @@ std::istream& String::read(const char separator, std::istream& stream, unsigned 
 	return stream;
 }
 
-char* String::creatNewDate(const String& other)
+char* String::creatNewData(const String& other) const
 {
 	unsigned thisLen = strlen(this->data);
 	unsigned otherLen = strlen(other.data);
@@ -103,15 +103,15 @@ bool String::operator==(const String& other) const
 	return strcmp(this->data, other.data) == 0;
 }
 
-String String::operator+(const String& other)
+String String::operator+(const String& other) const
 {
-	String result = String(creatNewDate(other));
+	String result = String(creatNewData(other));
 	return result;
 }
 
 String& String::operator+=(const String& other)
 {
-	setData(creatNewDate(other));
+	setData(creatNewData(other));
 	return *this;
 }
 

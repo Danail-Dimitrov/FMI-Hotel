@@ -35,7 +35,7 @@ void Engine::registerUser()
 	writeReservationToFile(fileName, reservation);
 }
 
-Room Engine::getRoom(String id)
+Room Engine::getRoom(const String& id)
 {
 	std::ifstream ifs("rooms.txt");
 
@@ -56,7 +56,7 @@ Room Engine::getRoom(String id)
 	throw std::exception("Room does not exist!");
 }
 
-bool Engine::isRoomAvailable(String reservationsFileName, Date startDaete, Date endDate)
+bool Engine::isRoomAvailable(const String& reservationsFileName, const Date& startDaete, const Date& endDate)
 {
 	//ако не съществува файла тоав ще го създаде
 	createReservationsFile(reservationsFileName);
@@ -70,7 +70,7 @@ bool Engine::isRoomAvailable(String reservationsFileName, Date startDaete, Date 
 	{
 		RoomReservation crrReservation;
 		ifs >> crrReservation;
-		if (crrReservation.getStartDate() <= endDate && crrReservation.getEndDate() >= startDaete && crrReservation.getIsActive())
+		if (HelperController::doTimePeriodsCross(crrReservation.getStartDate(), crrReservation.getEndDate(), startDaete, endDate) && crrReservation.getIsActive())
 			return false;
 		
 		//Има символ за нов ред
@@ -80,7 +80,7 @@ bool Engine::isRoomAvailable(String reservationsFileName, Date startDaete, Date 
 	return true;
 }
 
-void Engine::writeReservationToFile(String fileName, const RoomReservation& reservation)
+void Engine::writeReservationToFile(const String& fileName, const RoomReservation& reservation)
 {
 	std::ofstream ofs((buildReservationFileName(reservation.getRoomId())).getData(), std::ios::app);
 	if(!ofs.good())
@@ -188,7 +188,7 @@ void Engine::getReport()
 	ifs.close();
 }
 
-void Engine::getReportForRoom(Room room, Date startDate, Date endDate)
+void Engine::getReportForRoom(const Room& room, const Date& startDate, const Date& endDate)
 {
 	String fileName = buildReservationFileName(room.getId());
 
@@ -198,31 +198,34 @@ void Engine::getReportForRoom(Room room, Date startDate, Date endDate)
 
 	String reportFileName = getReportFileName(startDate);
 
-	std::ofstream reportFile(reportFileName.getData());
+	std::ofstream reportFile(reportFileName.getData(), std::ios::app);
 	if (!reportFile.good())
 		throw std::exception("File problem!");
 
-	reportFile << "Report for the period " << startDate << "to " << endDate << " :\n";
+	//reportFile << "Report for the period " << startDate << "to " << endDate << " :\n";
+	//reportFile << "(Note: if the end date for the report is before the end date of a reservation, that has started in the wanted time period, the real end date for the reservation will be printed)\n";
 
 	unsigned counter = 0;
-	unsigned daysInUse = 0;
+	unsigned daysUsed = 0;
 	while(!ifs.eof())
 	{
-		reportFile << counter + 1;
+		RoomReservation reservation;
+		ifs >> reservation;		
+		
+		unsigned crrDays = daysInUse(reservation, startDate, endDate);
 
-		if(true)
+		if(crrDays != 0)
 		{
-
-		}
-
-		++counter;
+			reportFile << ++counter;
+			daysUsed += crrDays;
+		}		
 	}
 
 	reportFile.close();
 	ifs.close();
 }
 
-void Engine::createReservationsFile(String fileName)
+void Engine::createReservationsFile(const String& fileName)
 {
 	std::ofstream ofs(fileName.getData(), std::ios::app);
 	if(!ofs.good())
@@ -238,29 +241,39 @@ unsigned Engine::getReservationsInFile(std::ifstream& ifs)
 	return reservationsCount;
 }
 
-String Engine::getReportFileName(Date date)
+String Engine::getReportFileName(const Date& date)
 {
-	String str = "stats-";
+	String str = "report-";
 	str += HelperController::convertNumToChar(date.getYear());
+	str += "-";
 	if(date.getMonth() < 10)
 	{
 		str += HelperController::convertNumToChar(0);
-		str += HelperController::convertNumToChar(date.getMonth());
+		str += HelperController::convertNumToChar(date.getMonth());		
 	}
+	else
+		str += HelperController::convertNumToChar(date.getMonth());
+
+	str += "-";
+	
 	if (date.getDay() < 10)
 	{
 		str += HelperController::convertNumToChar(0);
 		str += HelperController::convertNumToChar(date.getDay());
 	}
+	else
+		str += HelperController::convertNumToChar(date.getDay());
+	
+	str += ".txt";
 	return str;
 }
 
-String Engine::buildReservationFileName(String roomId)
+String Engine::buildReservationFileName(const String& roomId)
 {
 	return roomId + "_reservations.txt";
 }
 
-RoomReservation Engine::getReservationForDate(String fileName, Date date)
+RoomReservation Engine::getReservationForDate(const String& fileName, const Date& date)
 {
 	std::ifstream ifs(fileName.getData());
 	if (!ifs.good())
@@ -278,10 +291,18 @@ RoomReservation Engine::getReservationForDate(String fileName, Date date)
 	return crrReservation;
 }
 
-unsigned Engine::daysInUse(RoomReservation reservation, Date firstDate, Date secondDate)
+unsigned Engine::daysInUse(const RoomReservation& reservation, const Date& firstDate, const Date& secondDate)
 {
-	if (firstDate < reservation.getStartDate() || reservation.getEndDate() < firstDate)
-		return 0;
+	unsigned count = 0;
+	if(HelperController::doTimePeriodsCross(reservation.getStartDate(), reservation.getEndDate(), firstDate, secondDate))
+	{
+		Date start = HelperController::getLaterDate(reservation.getStartDate(), firstDate);
+		Date later = HelperController::getEarlierDate(reservation.getEndDate(), secondDate);
+
+		count = later - start;
+	}
+
+	return count;
 }
 
 void Engine::Run()

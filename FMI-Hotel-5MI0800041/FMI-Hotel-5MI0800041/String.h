@@ -34,7 +34,7 @@ private:
 	*/
 	std::istream& read(const char separator, std::istream& stream = std::cin, unsigned initialCapacity = 50);
 
-	char* creatNewDate(const String& other);
+	char* creatNewData(const String& other) const;
 public:
 	//Конструктори
 	//! Конструктор по подразбиране
@@ -89,7 +89,7 @@ public:
 	*	Параметри:
 	*		- const String& other
 	*/
-	String operator+ (const String& other);
+	String operator+ (const String& other) const;
 
 	String& operator+= (const String& other);
 
