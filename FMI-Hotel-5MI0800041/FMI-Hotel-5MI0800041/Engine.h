@@ -6,6 +6,7 @@
 #include "String.h"
 #include "Room.h"
 #include "RoomReservation.h"
+#include "HelperController.h"
 class Engine
 {
 private:
@@ -24,13 +25,21 @@ private:
 
 	static void freeRoom();
 
+	static void getReport();
+
+	static void getReportForRoom(Room room, Date startDate, Date endDate);
+
 	static void createReservationsFile(String fileName);
 
 	static unsigned getReservationsInFile(std::ifstream& ifs);
 
+	static String getReportFileName(Date date);
+
 	static String buildReservationFileName(String roomId);
 
 	static RoomReservation getReservationForDate(String fileName, Date date);
+
+	static unsigned daysInUse(RoomReservation reservation, Date firstDate, Date secondDate);
 
 public:
 	//Методи:

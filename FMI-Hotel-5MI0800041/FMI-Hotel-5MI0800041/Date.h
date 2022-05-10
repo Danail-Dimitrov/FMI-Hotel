@@ -8,10 +8,13 @@ class Date
 {
 private:
 	//Член-данни:
-	unsigned short int day;/*!< Деня на датата */  
-	unsigned short int month;/*!< Месеца на датата */  
-	unsigned short int year;/*!< Годината на датата */  
+	unsigned short day;/*!< Деня на датата */  
+	unsigned short month;/*!< Месеца на датата */  
+	unsigned short year;/*!< Годината на датата */  
 
+	bool isLeapYear(unsigned short year);
+
+	unsigned getDaysInMonth(unsigned short month, unsigned short year);
 public:
 	//Конструктори:
 	//!	Конструктор по подразбиране
@@ -22,11 +25,11 @@ public:
 	*	По този начин ако в констуктора се извика мутатора за ден преди тези за друготе член-данни ще има начин този мутатор да разбере, че месецът и годината нямат валидни стойности и не може да се валидира стойността на деня.
 	*	
 	*	Параметри:
-	*		- unsigned short int day	  
-	*		- unsigned short int month
-	*		- unsigned short int year
+	*		- unsigned short day	  
+	*		- unsigned short month
+	*		- unsigned short year
 	*/
-	Date(const unsigned short int day, const unsigned short int month, const unsigned short int year);
+	Date(const unsigned short day, const unsigned short month, const unsigned short year);
 
 	//Мутатори:
 	//!	Мутатор за ден
@@ -34,7 +37,7 @@ public:
 	*	Нужно е годината и месецът вече да са инициализирани, за да може да се извърши коректна валидация на стойността за ден. Ако месецът и годината нямат зададени стойности, конструкторите ще се им задали стойност нула.
 	*	
 	*	Параметри:
-	*		- unsigned short int day
+	*		- unsigned short day
 	* 
 	*	Ще се хвърли грешка ако:
 	*		- другите член данни нямат зададена стойност
@@ -50,11 +53,11 @@ public:
 	*		- деня има стойност 0
 	*		  Нулата се ползва само, за да се покаже, че член-данната няма зададена стойност
 	*/
-	void setDay(const unsigned short int day);
+	void setDay(const unsigned short day);
 	//!	Мутатор за месец
 	/*!
 	*	Параметри:
-	*		- unsigned short int month
+	*		- unsigned short month
 	* 
 	*	Ще се хвърли грешка ако:
 	*		- месеца има стойност нула\n
@@ -62,40 +65,40 @@ public:
 	* 
 	*		- месеца има стойност по голяма от 12\n
 	*/
-	void setMonth(const unsigned short int month);
+	void setMonth(const unsigned short month);
 	//! Мутатор за година
 	/*!
 	*	Съдържа константи които задават максимална и минимална стойност за годината
 	* 
 	*	Параметри:
-	*		- unsigned short int year\n
+	*		- unsigned short year\n
 	*		  представлява година
 	* 
 	*	Ще се хвърли грешка ако:
 	*		- year is outside of the allowed range\n
 	*		  Определените стойностти за годината се определя от константите в метода
 	*/
-	void setYear(const unsigned short int year);
+	void setYear(const unsigned short year);
 
 	//Селектори:
 	//!	Селектор за ден
 	/*!
 	*	Връща:
-	*		unsigned short int
+	*		unsigned short
 	*/
-	unsigned short int getDay() const { return this->day; }
+	unsigned short getDay() const { return this->day; }
 	//!	Селектор за месец
 	/*!
 	*	Връща:
-	*		unsigned short int
+	*		unsigned short
 	*/
-	unsigned short int getMonth() const { return this->month; }
+	unsigned short getMonth() const { return this->month; }
 	//!	Селектор за година
 	/*!
 	*	Връща:
-	*		unsigned short int
+	*		unsigned short
 	*/
-	unsigned short int getYear() const { return this->year; }
+	unsigned short getYear() const { return this->year; }
 
 	//Оператори:
 	//!	Оператор <
@@ -184,5 +187,7 @@ public:
 	*		- std::istream&
 	*/
 	friend std::istream& operator>> (std::istream& stream, Date& obj);
+
+	unsigned operator- (const Date& other);
 };
 #endif 

@@ -11,3 +11,23 @@ void HelperController::resize(char* arr, unsigned& size, int multiplier)
 	size = size * multiplier;
 }
 
+String HelperController::convertNumToChar(long number)
+{
+	String result;
+
+	if(number == 0)	
+	{
+		result = '0';
+		return result;
+	}
+		
+	while(number != 0)
+	{
+		char crrDigit = (number % 10) + '0';
+		result += crrDigit;
+		number /= 10;
+	}
+
+	return result;
+}
+

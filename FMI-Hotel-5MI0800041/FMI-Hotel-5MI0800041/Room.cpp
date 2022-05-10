@@ -4,7 +4,7 @@ Room::Room(): id("NO_ID"), numberOfBed(0), isOpen(0)
 {
 }
 
-Room::Room(const String& id, const unsigned short int numberOfBed, const bool isOpen): id(id), numberOfBed(numberOfBed), isOpen(isOpen)
+Room::Room(const String& id, const unsigned short numberOfBed, const bool isOpen): id(id), numberOfBed(numberOfBed), isOpen(isOpen)
 {
 }
 

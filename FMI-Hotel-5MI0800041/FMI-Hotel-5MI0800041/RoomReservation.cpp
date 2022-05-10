@@ -14,7 +14,7 @@ RoomReservation::RoomReservation(): roomId("NO_ROOM"), startDate(Date()), endDat
 }
 
 RoomReservation::RoomReservation(const String& roomId, const Date& startDate, const Date& endDate, const String& firstName, const String& lastName, const String& comment, const bool isActive):
-	roomId(roomId), firstName(firstName), lastName(lastName), isActive(isActive)
+	roomId(roomId), startDate(Date()), endDate(Date()), firstName(firstName), lastName(lastName), isActive(isActive)
 {
 	setTimePeriod(startDate, endDate);
 	setComment(comment);

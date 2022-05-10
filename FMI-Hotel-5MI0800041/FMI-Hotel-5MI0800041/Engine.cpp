@@ -168,6 +168,60 @@ void Engine::freeRoom()
 	ofs.close();
 }
 
+void Engine::getReport()
+{
+	Date startDate = IOController::readDate("the first");
+	Date endDate = IOController::readDate("the second");
+
+	std::ifstream ifs("rooms.txt");
+	if (!ifs.good())
+		throw std::exception("File problem!");
+
+	while(!ifs.eof())
+	{
+		Room crrRoom;
+		ifs >> crrRoom;
+		
+		getReportForRoom(crrRoom, startDate, endDate);
+	}
+
+	ifs.close();
+}
+
+void Engine::getReportForRoom(Room room, Date startDate, Date endDate)
+{
+	String fileName = buildReservationFileName(room.getId());
+
+	std::ifstream ifs(fileName.getData());
+	if (!ifs.good())
+		throw std::exception("File problem!");
+
+	String reportFileName = getReportFileName(startDate);
+
+	std::ofstream reportFile(reportFileName.getData());
+	if (!reportFile.good())
+		throw std::exception("File problem!");
+
+	reportFile << "Report for the period " << startDate << "to " << endDate << " :\n";
+
+	unsigned counter = 0;
+	unsigned daysInUse = 0;
+	while(!ifs.eof())
+	{
+		reportFile << counter + 1;
+
+		if(true)
+		{
+
+		}
+
+		++counter;
+	}
+
+	reportFile.close();
+	ifs.close();
+}
+
 void Engine::createReservationsFile(String fileName)
 {
 	std::ofstream ofs(fileName.getData(), std::ios::app);
@@ -182,6 +236,23 @@ unsigned Engine::getReservationsInFile(std::ifstream& ifs)
 	unsigned reservationsCount = ifs.tellg() / sizeof(RoomReservation);
 	ifs.seekg(0, std::ios::beg);
 	return reservationsCount;
+}
+
+String Engine::getReportFileName(Date date)
+{
+	String str = "stats-";
+	str += HelperController::convertNumToChar(date.getYear());
+	if(date.getMonth() < 10)
+	{
+		str += HelperController::convertNumToChar(0);
+		str += HelperController::convertNumToChar(date.getMonth());
+	}
+	if (date.getDay() < 10)
+	{
+		str += HelperController::convertNumToChar(0);
+		str += HelperController::convertNumToChar(date.getDay());
+	}
+	return str;
 }
 
 String Engine::buildReservationFileName(String roomId)
@@ -207,6 +278,12 @@ RoomReservation Engine::getReservationForDate(String fileName, Date date)
 	return crrReservation;
 }
 
+unsigned Engine::daysInUse(RoomReservation reservation, Date firstDate, Date secondDate)
+{
+	if (firstDate < reservation.getStartDate() || reservation.getEndDate() < firstDate)
+		return 0;
+}
+
 void Engine::Run()
 {
 	IOController::prindGreeting();
@@ -230,6 +307,9 @@ void Engine::Run()
 				break;
 			case '3':
 				freeRoom();
+				break;
+			case '4':
+				getReport();
 				break;
 			default:
 				break;

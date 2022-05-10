@@ -39,6 +39,24 @@ std::istream& String::read(const char separator, std::istream& stream, unsigned 
 	return stream;
 }
 
+char* String::creatNewDate(const String& other)
+{
+	unsigned thisLen = strlen(this->data);
+	unsigned otherLen = strlen(other.data);
+	unsigned newArrLen = thisLen + otherLen;
+	char* newArr = new char[newArrLen + 1];
+
+	for (size_t i = 0; i < thisLen; i++)
+		newArr[i] = this->getData()[i];
+
+	for (size_t i = 0; i < otherLen; i++)
+		newArr[i + thisLen] = other.getData()[i];
+
+	newArr[newArrLen] = '\0';
+	
+	return newArr;
+}
+
 String::String()
 {
 	this->data = new char[1];
@@ -48,6 +66,14 @@ String::String()
 String::String(const char* data): data(nullptr)
 {
 	setData(data);
+}
+
+String::String(const char data): data(nullptr)
+{
+	char arr[2];
+	arr[0] = data;
+	arr[1] = '\0';
+	setData(arr);
 }
 
 String::String(const String& other): data(nullptr)
@@ -79,20 +105,14 @@ bool String::operator==(const String& other) const
 
 String String::operator+(const String& other)
 {
-	unsigned thisLen = strlen(this->data);
-	unsigned otherLen = strlen(other.data);
-	unsigned newArrLen = thisLen + otherLen;
-	char* newArr = new char[newArrLen + 1];
-
-	for (size_t i = 0; i < thisLen; i++)
-		newArr[i] = this->getData()[i];
-
-	for (size_t i = 0; i < otherLen; i++)
-		newArr[i + thisLen] = other.getData()[i];
-
-	newArr[newArrLen] = '\0';
-	String result = String(newArr);
+	String result = String(creatNewDate(other));
 	return result;
+}
+
+String& String::operator+=(const String& other)
+{
+	setData(creatNewDate(other));
+	return *this;
 }
 
 std::istream& String::get(const char separator, std::istream& stream)
