@@ -23,6 +23,8 @@ public:
 
 	static void printNthRoom(Room room, int n, std::ostream& stream = std::cout);
 
+	static void printNoRoomsFound(std::ostream& stream = std::cout, const String& requirements ="");
+
 	static void printNoRoomsMsg(std::ostream& stream = std::cout);
 
 	static void printContrinueMsg(std::ostream& stream = std::cout);
@@ -51,5 +53,7 @@ public:
 	static String readComment(std::istream& istream = std::cin, std::ostream& ostream = std::cout);
 
 	static String readName(String dateIndex, std::istream& istream = std::cin, std::ostream& ostream = std::cout);
+
+	static unsigned readNumberOfBeds(std::istream& istream = std::cin, std::ostream& ostream = std::cout);
 };
 #endif

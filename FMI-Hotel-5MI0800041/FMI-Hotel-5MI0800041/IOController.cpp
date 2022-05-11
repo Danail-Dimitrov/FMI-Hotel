@@ -14,6 +14,7 @@ void IOController::printMenu(std::ostream& stream)
 	stream << "2. Get free rooms at a given date.\n";
 	stream << "3. Free room.\n";
 	stream << "4. Get report.\n";
+	stream << "5. Get perfect room.\n";
 }
 
 void IOController::clearScreen()
@@ -30,6 +31,11 @@ void IOController::printFreeRoomsStartMsg(Date date, std::ostream& stream)
 void IOController::printNthRoom(Room room, int n, std::ostream& stream)
 {
 	stream << n << ". " << room << "\n";
+}
+
+void IOController::printNoRoomsFound(std::ostream& stream, const String& requirements)
+{
+	stream << "No room that satisfied the requirements is found. Requirements:\n" << requirements;
 }
 
 void IOController::printNoRoomsMsg(std::ostream& stream)
@@ -95,4 +101,12 @@ String IOController::readName(String dateIndex, std::istream& istream, std::ostr
 	String input;
 	istream >> input;
 	return input;
+}
+
+unsigned IOController::readNumberOfBeds(std::istream& istream, std::ostream& ostream)
+{
+	ostream << "Enter the desired number of beds:\n";
+	unsigned beds;
+	istream >> beds;
+	return beds;
 }

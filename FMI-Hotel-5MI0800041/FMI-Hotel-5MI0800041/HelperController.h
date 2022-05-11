@@ -29,5 +29,7 @@ public:
 	static bool doTimePeriodsCross(const Date& date1Start, const Date& date1End, const Date& date2Start, const Date& date2End);
 
 	static void reverse(char* arr);
+
+	static void checkStream(std::ios& stream);
 };
 #endif

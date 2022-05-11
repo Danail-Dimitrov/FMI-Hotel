@@ -66,3 +66,9 @@ void HelperController::reverse(char* arr)
 	}
 }
 
+void HelperController::checkStream(std::ios& stream)
+{
+	if(!stream.good())
+		throw std::exception("File problem!");
+}
+

@@ -27,13 +27,17 @@ private:
 
 	void freeRoom();
 
+	void getPerfectRoom();
+
 	void getReport();
 
 	void getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile);
 
 	void createReservationsFile(const String& fileName);
 
-	unsigned getReservationsInFile(std::ifstream& ifs);
+	unsigned getNumberReservationsInFile(std::ifstream& ifs);
+
+	unsigned getNumberRoomsInFile(std::ifstream& ifs);
 
 	String getReportFileName(const Date& date);
 

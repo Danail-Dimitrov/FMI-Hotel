@@ -42,8 +42,7 @@ Room Engine::getRoom(const String& id)
 {
 	std::ifstream ifs("rooms.txt");
 
-	if (!ifs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ifs);
 	
 	while(!ifs.eof())
 	{
@@ -66,8 +65,7 @@ bool Engine::isRoomAvailable(const String& reservationsFileName, const Date& sta
 
 	std::ifstream ifs(reservationsFileName.getData());
 
-	if (!ifs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ifs);
 	ifs.peek();
 	while(!ifs.eof())
 	{
@@ -86,8 +84,7 @@ bool Engine::isRoomAvailable(const String& reservationsFileName, const Date& sta
 void Engine::writeReservationToFile(const String& fileName, const RoomReservation& reservation)
 {
 	std::ofstream ofs((buildReservationFileName(reservation.getRoomId())).getData(), std::ios::app);
-	if(!ofs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ofs);
 
 	ofs << reservation << std::endl;
 
@@ -101,8 +98,7 @@ void Engine::findFreeRooms()
 	IOController::printFreeRoomsStartMsg(desieredDate);
 
 	std::ifstream roomsFile("rooms.txt");
-	if(!roomsFile.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(roomsFile);
 
 	int roomsPrinted = 0;
 
@@ -140,10 +136,9 @@ void Engine::freeRoom()
 	reservation.setIsActive(0);
 
 	std::ifstream ifs(fileName.getData());
-	if (!ifs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ifs);
 
-	unsigned reservationsCount = getReservationsInFile(ifs);
+	unsigned reservationsCount = getNumberReservationsInFile(ifs);
 	RoomReservation* reservations = new RoomReservation[reservationsCount];
 
 	int index = 0;
@@ -162,13 +157,57 @@ void Engine::freeRoom()
 
 	//Не използвам функцията writeReservationToFile, защото тя отваря и затваря потока за всяка една резерваци, така хасби време излишно
 	std::ofstream ofs(fileName.getData(), std::ios::trunc);
-	if (!ofs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ofs);
 
 	for (size_t i = 0; i < index - 1; i++)
 		ofs << reservations[i];
 
 	ofs.close();
+}
+
+void Engine::getPerfectRoom()
+{
+	unsigned desiredNumOfBeds = IOController::readNumberOfBeds();
+
+	Date startDate = IOController::readDate("the first");
+	Date endDate = IOController::readDate("the second");
+
+	std::ifstream ifs("rooms.txt");
+	HelperController::checkStream(ifs);
+
+	unsigned perfectRoomsCount = 0;
+	unsigned perfectRoomBedCount = 0;
+	unsigned roomsInFile = getNumberRoomsInFile(ifs);
+	Room* perfectRooms = new Room[roomsInFile];
+
+	while(!ifs.eof())
+	{
+		Room crrRoom;
+		ifs >> crrRoom;
+
+		String fileName = buildReservationFileName(crrRoom.getId());
+		if(isRoomAvailable(fileName, startDate, endDate))
+		{
+			if(crrRoom.getNumberOfBed() == perfectRoomBedCount)
+			{
+				perfectRooms[perfectRoomsCount++] = crrRoom;
+			}
+			else if(crrRoom.getNumberOfBed() < perfectRoomBedCount)
+			{
+				delete[] perfectRooms;
+				//Знаем, че тези които сега са в масива, както и сегашната не са най добрите стай, за това няма шанс те да са във финалния масив и не е нужно да предвидим място за тях
+				perfectRooms = new Room[roomsInFile - 1 - perfectRoomsCount];
+				perfectRoomsCount = 1;
+				perfectRoomBedCount = crrRoom.getNumberOfBed();
+				perfectRooms[0] = crrRoom;
+			}
+		}
+	}
+
+	if(perfectRoomsCount == 0)
+	{
+		String requirements = String("Number of bdes: ") + HelperController::convertNumToChar(desiredNumOfBeds);
+	}
 }
 
 void Engine::getReport()
@@ -177,14 +216,12 @@ void Engine::getReport()
 	Date endDate = IOController::readDate("the second");
 
 	std::ifstream ifs("rooms.txt");
-	if (!ifs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ifs);
 
 	String reportFileName = getReportFileName(startDate);
 
 	std::ofstream reportFile(reportFileName.getData(), std::ios::trunc);
-	if(!reportFile.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(reportFile);
 
 	reportFile << "Report for the period " << startDate << "to " << endDate << " :\n";
 	reportFile << "(Note: if the end date for the report is before the end date of a reservation, that has started in the wanted time period, the real end date for the reservation will be printed)\n";
@@ -211,8 +248,7 @@ void Engine::getReportForRoom(const Room& room, const Date& startDate, const Dat
 	String fileName = buildReservationFileName(room.getId());
 
 	std::ifstream ifs(fileName.getData());
-	if (!ifs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ifs);
 
 	//ако не съществува файла тоав ще го създаде
 	createReservationsFile(fileName);
@@ -242,15 +278,23 @@ void Engine::getReportForRoom(const Room& room, const Date& startDate, const Dat
 void Engine::createReservationsFile(const String& fileName)
 {
 	std::ofstream ofs(fileName.getData(), std::ios::app);
-	if(!ofs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ofs);
+
 	ofs.close();
 }
 
-unsigned Engine::getReservationsInFile(std::ifstream& ifs)
+unsigned Engine::getNumberReservationsInFile(std::ifstream& ifs)
 {
 	ifs.seekg(0, std::ios::end);
 	unsigned reservationsCount = ifs.tellg() / sizeof(RoomReservation);
+	ifs.seekg(0, std::ios::beg);
+	return reservationsCount;
+}
+
+unsigned Engine::getNumberRoomsInFile(std::ifstream& ifs)
+{
+	ifs.seekg(0, std::ios::end);
+	unsigned reservationsCount = ifs.tellg() / sizeof(Room);
 	ifs.seekg(0, std::ios::beg);
 	return reservationsCount;
 }
@@ -290,10 +334,10 @@ String Engine::buildReservationFileName(const String& roomId)
 RoomReservation Engine::getReservationForDate(const String& fileName, const Date& date)
 {
 	std::ifstream ifs(fileName.getData());
-	if (!ifs.good())
-		throw std::exception("File problem!");
+	HelperController::checkStream(ifs);
+
 	RoomReservation crrReservation;
-	unsigned reservationsCount = getReservationsInFile(ifs);
+	unsigned reservationsCount = getNumberReservationsInFile(ifs);
 	unsigned count = 0;
 	//Има нов ред накрая на файла и eof не връща истина когато трябва
 	while (count <= reservationsCount && !(crrReservation.getStartDate() <= date && date <= crrReservation.getEndDate()))
@@ -345,6 +389,9 @@ void Engine::Run()
 				break;
 			case '4':
 				getReport();
+				break;
+			case '5':
+				getPerfectRoom();
 				break;
 			default:
 				break;
