@@ -117,8 +117,8 @@ void Engine::findFreeRooms()
 		roomsFile.ignore();
 	}
 
-	if (roomsPrinted == 0)
-		IOController::printNoRoomsMsg();
+	if(roomsPrinted == 0)
+		IOController::printNoRoomsFound("Free room");
 }
 
 void Engine::freeRoom()
@@ -172,6 +172,9 @@ void Engine::getPerfectRoom()
 	Date startDate = IOController::readDate("the first");
 	Date endDate = IOController::readDate("the second");
 
+	if(startDate > endDate)
+		throw std::exception("Start day must be before end date.;");
+
 	std::ifstream ifs("rooms.txt");
 	HelperController::checkStream(ifs);
 
@@ -207,7 +210,10 @@ void Engine::getPerfectRoom()
 	if(perfectRoomsCount == 0)
 	{
 		String requirements = String("Number of bdes: ") + HelperController::convertNumToChar(desiredNumOfBeds);
+		IOController::printNoRoomsFound(requirements);
 	}
+	else
+		IOController::printPerfectRooms(perfectRooms, perfectRoomsCount);
 }
 
 void Engine::getReport()

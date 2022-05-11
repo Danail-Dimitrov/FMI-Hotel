@@ -23,9 +23,9 @@ public:
 
 	static void printNthRoom(Room room, int n, std::ostream& stream = std::cout);
 
-	static void printNoRoomsFound(std::ostream& stream = std::cout, const String& requirements ="");
+	static void printNoRoomsFound(const String& requirements = "", std::ostream& stream = std::cout);
 
-	static void printNoRoomsMsg(std::ostream& stream = std::cout);
+	static void printPerfectRooms(const Room* rooms, unsigned count, std::ostream& stream = std::cout);
 
 	static void printContrinueMsg(std::ostream& stream = std::cout);
 

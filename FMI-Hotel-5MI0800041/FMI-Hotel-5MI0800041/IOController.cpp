@@ -33,14 +33,17 @@ void IOController::printNthRoom(Room room, int n, std::ostream& stream)
 	stream << n << ". " << room << "\n";
 }
 
-void IOController::printNoRoomsFound(std::ostream& stream, const String& requirements)
+void IOController::printNoRoomsFound(const String& requirements, std::ostream& stream)
 {
 	stream << "No room that satisfied the requirements is found. Requirements:\n" << requirements;
 }
 
-void IOController::printNoRoomsMsg(std::ostream& stream)
+void IOController::printPerfectRooms(const Room* rooms, unsigned count, std::ostream& stream)
 {
-	stream << "No free rooms!\n";
+	stream << "Suitabel rooms:\n";
+
+	for(size_t i = 0; i < count; ++i)
+		stream << rooms[i] << "\n";
 }
 
 void IOController::printContrinueMsg(std::ostream& stream)
