@@ -37,7 +37,7 @@ private:
 
 	unsigned getNumberReservationsInFile(std::ifstream& ifs);
 
-	unsigned getNumberRoomsInFile(std::ifstream& ifs);
+	unsigned getNumberRoomsInFile(const String& fileName);
 
 	String getReportFileName(const Date& date);
 

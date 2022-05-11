@@ -9,6 +9,7 @@ private:
 	String id;/*!< Номера на стаята */  
 	unsigned short numberOfBed;/*!< Броя легла в стаята */
 	bool isOpen;/*!< Флаг показващ дали стъаята в момента е затворена */
+	String comment;
 
 public:
 	//Конструктори:
@@ -21,7 +22,7 @@ public:
 	*		- unsigned short numberOfBeds
 	*		- bool isOpen
 	*/
-	Room(const String& id, const unsigned short numberOfBed, const bool isOpen);
+	Room(const String& id, const unsigned short numberOfBed, const bool isOpen, String comment);
 
 	//Селектори:
 	//!	Селектор за номер
@@ -44,6 +45,8 @@ public:
 	*		-	лъжа ако стаята е затворенас
 	*/
 	bool getIsOpen() const { return isOpen; }
+
+	String getComment() const { return comment; }
 
 	//Оператори:
 	//!	Oператор <<

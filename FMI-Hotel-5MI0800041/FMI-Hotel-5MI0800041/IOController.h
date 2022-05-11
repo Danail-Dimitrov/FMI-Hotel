@@ -29,6 +29,8 @@ public:
 
 	static void printContrinueMsg(std::ostream& stream = std::cout);
 
+	static void printFreedRoomMsg(std::ostream& stream = std::cout);
+
 	//Методи за четене:
 	/*! Чете един символ, число, представляващо избраната команта
 	* Връща:

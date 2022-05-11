@@ -9,12 +9,13 @@ void IOController::prindGreeting(std::ostream& stream)
 
 void IOController::printMenu(std::ostream& stream)
 {
-	stream << "Menu: \nEnter the number for the command you would like to be executed!" << std::endl;
+	stream << "Menu: \nEnter the number for the command you would like to be executed!\n";
 	stream << "1. Register a guest.\n";
 	stream << "2. Get free rooms at a given date.\n";
 	stream << "3. Free room.\n";
 	stream << "4. Get report.\n";
 	stream << "5. Get perfect room.\n";
+	stream << "6. Close room.\n";
 }
 
 void IOController::clearScreen()
@@ -35,12 +36,12 @@ void IOController::printNthRoom(Room room, int n, std::ostream& stream)
 
 void IOController::printNoRoomsFound(const String& requirements, std::ostream& stream)
 {
-	stream << "No room that satisfied the requirements is found. Requirements:\n" << requirements;
+	stream << "No room that satisfied the requirements is found. Requirements:\n" << requirements << "\n";
 }
 
 void IOController::printPerfectRooms(const Room* rooms, unsigned count, std::ostream& stream)
 {
-	stream << "Suitabel rooms:\n";
+	stream << "Suitable rooms:\n";
 
 	for(size_t i = 0; i < count; ++i)
 		stream << rooms[i] << "\n";
@@ -49,6 +50,11 @@ void IOController::printPerfectRooms(const Room* rooms, unsigned count, std::ost
 void IOController::printContrinueMsg(std::ostream& stream)
 {
 	stream << "Enter any key to continue!\n";
+}
+
+void IOController::printFreedRoomMsg(std::ostream& stream)
+{
+	stream << "Freed room!\n";
 }
 
 char IOController::readMenuInput(std::istream& stream)

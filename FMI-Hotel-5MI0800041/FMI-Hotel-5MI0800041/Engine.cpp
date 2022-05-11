@@ -23,6 +23,9 @@ void Engine::registerUser()
 	if(startDate > endDate)
 		throw std::exception("Start date must be before end date!");
 
+	if (startDate < today)
+		throw std::exception("Start date can not be before today");
+
 	String fileName = buildReservationFileName(id);
 
 	if(!isRoomAvailable(fileName, startDate, endDate))
@@ -162,6 +165,8 @@ void Engine::freeRoom()
 	for (size_t i = 0; i < index - 1; i++)
 		ofs << reservations[i];
 
+	IOController::printFreedRoomMsg();
+
 	ofs.close();
 }
 
@@ -180,7 +185,7 @@ void Engine::getPerfectRoom()
 
 	unsigned perfectRoomsCount = 0;
 	unsigned perfectRoomBedCount = 0;
-	unsigned roomsInFile = getNumberRoomsInFile(ifs);
+	unsigned roomsInFile = getNumberRoomsInFile("rooms.txt");
 	Room* perfectRooms = new Room[roomsInFile];
 
 	while(!ifs.eof())
@@ -189,11 +194,16 @@ void Engine::getPerfectRoom()
 		ifs >> crrRoom;
 
 		String fileName = buildReservationFileName(crrRoom.getId());
-		if(isRoomAvailable(fileName, startDate, endDate))
+		if(isRoomAvailable(fileName, startDate, endDate) && crrRoom.getNumberOfBed() >= desiredNumOfBeds)
 		{
 			if(crrRoom.getNumberOfBed() == perfectRoomBedCount)
 			{
 				perfectRooms[perfectRoomsCount++] = crrRoom;
+			}
+			else if(perfectRoomsCount == 0)
+			{
+				perfectRooms[perfectRoomsCount++] = crrRoom;
+				perfectRoomBedCount = crrRoom.getNumberOfBed();
 			}
 			else if(crrRoom.getNumberOfBed() < perfectRoomBedCount)
 			{
@@ -205,6 +215,8 @@ void Engine::getPerfectRoom()
 				perfectRooms[0] = crrRoom;
 			}
 		}
+
+		ifs.ignore();
 	}
 
 	if(perfectRoomsCount == 0)
@@ -297,12 +309,19 @@ unsigned Engine::getNumberReservationsInFile(std::ifstream& ifs)
 	return reservationsCount;
 }
 
-unsigned Engine::getNumberRoomsInFile(std::ifstream& ifs)
+unsigned Engine::getNumberRoomsInFile(const String& fileName)
 {
-	ifs.seekg(0, std::ios::end);
-	unsigned reservationsCount = ifs.tellg() / sizeof(Room);
-	ifs.seekg(0, std::ios::beg);
-	return reservationsCount;
+	std::ifstream ifs(fileName.getData());
+	HelperController::checkStream(ifs);
+	unsigned count = 0;
+	while (!ifs.eof())
+	{
+		Room temp;
+		ifs >> temp;
+		++count;
+		ifs.ignore();
+	}
+	return count;
 }
 
 String Engine::getReportFileName(const Date& date)
@@ -398,6 +417,9 @@ void Engine::Run()
 				break;
 			case '5':
 				getPerfectRoom();
+				break;
+			case '6':
+				//closeRoom();
 				break;
 			default:
 				break;
