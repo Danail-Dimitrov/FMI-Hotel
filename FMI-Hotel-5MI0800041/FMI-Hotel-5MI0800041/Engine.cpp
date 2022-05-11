@@ -1,6 +1,9 @@
 ﻿#include "Engine.h"
 
-Date Engine::today;
+Engine::Engine()
+{
+
+}
 
 void Engine::registerUser()
 {
@@ -25,7 +28,7 @@ void Engine::registerUser()
 	if(!isRoomAvailable(fileName, startDate, endDate))
 		throw std::exception("Room not available!");
 
-	String comment = IOController::readComment();	
+	String comment = IOController::readComment();
 
 	String firstName = IOController::readName("first");
 	String lastName = IOController::readName("second");
@@ -357,4 +360,10 @@ void Engine::Run()
 			std::cout << "Exception: " << ex.what() << std::endl;
 		}
 	}
+}
+
+Engine& Engine::getEngine()
+{
+	static Engine engine;
+	return engine;
 }

@@ -10,39 +10,47 @@
 class Engine
 {
 private:
-	static Date today;
+	Date today;
+
+	Engine();
 
 	//! Регистрация на гост
-	static void registerUser();
+	void registerUser();
 
-	static Room getRoom(const String& id);
+	Room getRoom(const String& id);
 
-	static bool isRoomAvailable(const String& reservationsFileName, const Date& startDaete, const Date& endDate);
+	bool isRoomAvailable(const String& reservationsFileName, const Date& startDaete, const Date& endDate);
 
-	static void writeReservationToFile(const String& fileName, const RoomReservation& reservation);
+	void writeReservationToFile(const String& fileName, const RoomReservation& reservation);
 
-	static void findFreeRooms();
+	void findFreeRooms();
 
-	static void freeRoom();
+	void freeRoom();
 
-	static void getReport();
+	void getReport();
 
-	static void getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile);
+	void getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile);
 
-	static void createReservationsFile(const String& fileName);
+	void createReservationsFile(const String& fileName);
 
-	static unsigned getReservationsInFile(std::ifstream& ifs);
+	unsigned getReservationsInFile(std::ifstream& ifs);
 
-	static String getReportFileName(const Date& date);
+	String getReportFileName(const Date& date);
 
-	static String buildReservationFileName(const String& roomId);
+	String buildReservationFileName(const String& roomId);
 
-	static RoomReservation getReservationForDate(const String& fileName, const Date& date);
+	RoomReservation getReservationForDate(const String& fileName, const Date& date);
 
-	static unsigned daysInUse(const RoomReservation& reservation, const Date& firstDate, const Date& secondDate);
+	unsigned daysInUse(const RoomReservation& reservation, const Date& firstDate, const Date& secondDate);
 
 public:
+
+	void operator=(const Engine& other) = delete;
+	Engine(const Engine& other) = delete;
+
 	//Методи:
-	static void Run();
+	void Run();
+
+	static Engine& getEngine();
 };
 #endif

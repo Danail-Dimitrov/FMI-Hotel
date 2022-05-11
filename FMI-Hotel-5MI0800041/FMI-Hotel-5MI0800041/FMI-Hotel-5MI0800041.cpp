@@ -9,5 +9,9 @@
 
 int main()
 {
-	Engine::Run();
+	Engine& engine = Engine::getEngine();
+
+	engine.Run();
+
+	return 0;
 }
