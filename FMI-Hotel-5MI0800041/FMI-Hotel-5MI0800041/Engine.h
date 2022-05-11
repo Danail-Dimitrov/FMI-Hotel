@@ -27,7 +27,7 @@ private:
 
 	static void getReport();
 
-	static void getReportForRoom(const Room& room, const Date& startDate, const Date& endDate);
+	static void getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile);
 
 	static void createReservationsFile(const String& fileName);
 

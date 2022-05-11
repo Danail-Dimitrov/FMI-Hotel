@@ -177,18 +177,33 @@ void Engine::getReport()
 	if (!ifs.good())
 		throw std::exception("File problem!");
 
+	String reportFileName = getReportFileName(startDate);
+
+	std::ofstream reportFile(reportFileName.getData(), std::ios::trunc);
+	if(!reportFile.good())
+		throw std::exception("File problem!");
+
+	reportFile << "Report for the period " << startDate << "to " << endDate << " :\n";
+	reportFile << "(Note: if the end date for the report is before the end date of a reservation, that has started in the wanted time period, the real end date for the reservation will be printed)\n";
+
 	while(!ifs.eof())
 	{
 		Room crrRoom;
-		ifs >> crrRoom;
+		ifs >> crrRoom;		
 		
-		getReportForRoom(crrRoom, startDate, endDate);
+		reportFile << "Room " << crrRoom.getId() << ":\n";
+
+		getReportForRoom(crrRoom, startDate, endDate, reportFile);
+
+		//Има нов ред след стаите
+		ifs.ignore();
 	}
 
+	reportFile.close();
 	ifs.close();
 }
 
-void Engine::getReportForRoom(const Room& room, const Date& startDate, const Date& endDate)
+void Engine::getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile)
 {
 	String fileName = buildReservationFileName(room.getId());
 
@@ -196,15 +211,10 @@ void Engine::getReportForRoom(const Room& room, const Date& startDate, const Dat
 	if (!ifs.good())
 		throw std::exception("File problem!");
 
-	String reportFileName = getReportFileName(startDate);
+	//ако не съществува файла тоав ще го създаде
+	createReservationsFile(fileName);
 
-	std::ofstream reportFile(reportFileName.getData(), std::ios::app);
-	if (!reportFile.good())
-		throw std::exception("File problem!");
-
-	//reportFile << "Report for the period " << startDate << "to " << endDate << " :\n";
-	//reportFile << "(Note: if the end date for the report is before the end date of a reservation, that has started in the wanted time period, the real end date for the reservation will be printed)\n";
-
+	ifs.peek();
 	unsigned counter = 0;
 	unsigned daysUsed = 0;
 	while(!ifs.eof())
@@ -216,12 +226,13 @@ void Engine::getReportForRoom(const Room& room, const Date& startDate, const Dat
 
 		if(crrDays != 0)
 		{
-			reportFile << ++counter;
+			reportFile << ++counter <<". " << reservation << "\n";
 			daysUsed += crrDays;
 		}		
 	}
 
-	reportFile.close();
+	reportFile << "Total days used: " << daysUsed << "\n";
+
 	ifs.close();
 }
 
