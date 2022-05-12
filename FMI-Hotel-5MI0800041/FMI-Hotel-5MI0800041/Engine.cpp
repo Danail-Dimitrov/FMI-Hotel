@@ -74,7 +74,7 @@ bool Engine::isRoomAvailable(const String& reservationsFileName, const Date& sta
 	{
 		RoomReservation crrReservation;
 		ifs >> crrReservation;
-		if (HelperController::doTimePeriodsCross(crrReservation.getStartDate(), crrReservation.getEndDate(), startDaete, endDate) && crrReservation.getIsActive())
+		if (HelperController::doTimePeriodsCross(crrReservation.getStartDate(), crrReservation.getEndDate(), startDaete, endDate) || !(crrReservation.getIsActive()))
 			return false;
 		
 		//Има символ за нов ред
@@ -128,46 +128,7 @@ void Engine::freeRoom()
 {
 	String id = IOController::readRoomId();
 	Room room = getRoom(id);
-
-	String fileName = buildReservationFileName(id);
-
-	if(isRoomAvailable(fileName, today, today))
-		throw std::exception("Room is not in use!");
-
-	RoomReservation reservation = getReservationForDate(fileName, today);
-
-	reservation.setIsActive(0);
-
-	std::ifstream ifs(fileName.getData());
-	HelperController::checkStream(ifs);
-
-	unsigned reservationsCount = getNumberReservationsInFile(ifs);
-	RoomReservation* reservations = new RoomReservation[reservationsCount];
-
-	int index = 0;
-	//Има нов ред накрая на файла и eof не връща истина когато трябва
-	while(index < reservationsCount)
-	{
-		RoomReservation crrReservation;
-		ifs >> crrReservation;
-		if (crrReservation != reservation)
-			reservations[index++] = crrReservation;
-		else
-			reservations[index++] = reservation;
-	}
-
-	ifs.close();
-
-	//Не използвам функцията writeReservationToFile, защото тя отваря и затваря потока за всяка една резерваци, така хасби време излишно
-	std::ofstream ofs(fileName.getData(), std::ios::trunc);
-	HelperController::checkStream(ofs);
-
-	for (size_t i = 0; i < index - 1; i++)
-		ofs << reservations[i];
-
-	IOController::printFreedRoomMsg();
-
-	ofs.close();
+	freeRoom(room);
 }
 
 void Engine::getPerfectRoom()
@@ -259,6 +220,91 @@ void Engine::getReport()
 
 	reportFile.close();
 	ifs.close();
+}
+
+void Engine::closeRoom()
+{
+	String id = IOController::readRoomId();
+	Room room = getRoom(id);
+
+	String fileName = buildReservationFileName(id);
+
+	if(!isRoomAvailable(fileName, today, today))
+		freeRoom(room);
+
+	room.setIsOpen(0);
+
+	std::ifstream ifs("rooms.txt");
+	HelperController::checkStream(ifs);
+
+	unsigned roomsCount = getNumberRoomsInFile("rooms.txt");
+	Room* rooms = new Room[roomsCount];
+
+	int index = 0;
+	while(!ifs.eof())
+	{
+		Room crrRoom;
+		ifs >> crrRoom;
+		if(crrRoom != room)
+			rooms[index++] = crrRoom;
+		else
+			rooms[index++] = room;
+	}
+
+	ifs.close();
+
+	std::ofstream ofs("rooms.txt", std::ios::trunc);
+	HelperController::checkStream(ofs);
+
+	for(size_t i = 0; i < roomsCount; i++)
+		ofs << rooms[i] << "\n";
+
+	IOController::printClosedRoomMsg();
+
+	ofs.close();
+}
+
+void Engine::freeRoom(const Room& room)
+{
+	String fileName = buildReservationFileName(room.getId());
+
+	if(isRoomAvailable(fileName, today, today))
+		throw std::exception("Room is not in use!");
+
+	RoomReservation reservation = getReservationForDate(fileName, today);
+
+	reservation.setIsActive(0);
+
+	std::ifstream ifs(fileName.getData());
+	HelperController::checkStream(ifs);
+
+	unsigned reservationsCount = getNumberReservationsInFile(ifs);
+	RoomReservation* reservations = new RoomReservation[reservationsCount];
+
+	int index = 0;
+	//Има нов ред накрая на файла и eof не връща истина когато трябва
+	while(index < reservationsCount)
+	{
+		RoomReservation crrReservation;
+		ifs >> crrReservation;
+		if(crrReservation != reservation)
+			reservations[index++] = crrReservation;
+		else
+			reservations[index++] = reservation;
+	}
+
+	ifs.close();
+
+	//Не използвам функцията writeReservationToFile, защото тя отваря и затваря потока за всяка една резерваци, така хасби време излишно
+	std::ofstream ofs(fileName.getData(), std::ios::trunc);
+	HelperController::checkStream(ofs);
+
+	for(size_t i = 0; i < index - 1; i++)
+		ofs << reservations[i];
+
+	IOController::printFreedRoomMsg();
+
+	ofs.close();
 }
 
 void Engine::getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile)
@@ -419,7 +465,7 @@ void Engine::Run()
 				getPerfectRoom();
 				break;
 			case '6':
-				//closeRoom();
+				closeRoom();
 				break;
 			default:
 				break;

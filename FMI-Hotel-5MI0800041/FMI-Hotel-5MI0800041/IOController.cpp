@@ -57,6 +57,11 @@ void IOController::printFreedRoomMsg(std::ostream& stream)
 	stream << "Freed room!\n";
 }
 
+void IOController::printClosedRoomMsg(std::ostream& stream)
+{
+	stream << "Closed Room!\n";
+}
+
 char IOController::readMenuInput(std::istream& stream)
 {
 	char input;

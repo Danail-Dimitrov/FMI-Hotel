@@ -24,6 +24,8 @@ public:
 	*/
 	Room(const String& id, const unsigned short numberOfBed, const bool isOpen, String comment);
 
+	void setIsOpen(bool status);
+
 	//Селектори:
 	//!	Селектор за номер
 	/*!
@@ -78,5 +80,9 @@ public:
 	*		- std::istream&
 	*/
 	friend std::istream& operator>> (std::istream& stream, Room& obj);
+	
+	bool operator== (const Room& other);
+
+	bool operator!= (const Room& other);
 };
 #endif

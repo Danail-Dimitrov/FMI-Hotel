@@ -8,6 +8,21 @@ Room::Room(const String& id, const unsigned short numberOfBed, const bool isOpen
 {
 }
 
+void Room::setIsOpen(bool status)
+{
+	this->isOpen = status;
+}
+
+bool Room::operator==(const Room& other)
+{
+	return this->getId() == other.getId();
+}
+
+bool Room::operator!=(const Room& other)
+{
+	return !(*this == other);
+}
+
 std::ostream& operator<<(std::ostream& stream, const Room& obj)
 {
 	const char SEPARATOR = ' ';

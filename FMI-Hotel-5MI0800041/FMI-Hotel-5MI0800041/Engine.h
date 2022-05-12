@@ -31,6 +31,10 @@ private:
 
 	void getReport();
 
+	void closeRoom();
+
+	void freeRoom(const Room& room);
+
 	void getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile);
 
 	void createReservationsFile(const String& fileName);
