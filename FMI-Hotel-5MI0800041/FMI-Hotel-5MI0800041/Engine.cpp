@@ -439,8 +439,8 @@ void Engine::Run()
 	IOController::prindGreeting();
 	today = IOController::readDate("todays");
 	//Задавам стойност а за да съм сигурен че няма да е нула в началото
-	char command = 'a';
-	while (command != '0')
+	char command = '\0';
+	while (command != 'e')
 	{
 		try
 		{
@@ -467,7 +467,10 @@ void Engine::Run()
 			case '6':
 				closeRoom();
 				break;
-			default:
+			case 'e':
+				IOController::printGoodbye();
+				break;
+			default:	
 				break;
 			}
 

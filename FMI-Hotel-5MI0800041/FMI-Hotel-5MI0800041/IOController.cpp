@@ -16,6 +16,7 @@ void IOController::printMenu(std::ostream& stream)
 	stream << "4. Get report.\n";
 	stream << "5. Get perfect room.\n";
 	stream << "6. Close room.\n";
+	stream << "e. Exit the program.\n";
 }
 
 void IOController::clearScreen()
@@ -62,6 +63,11 @@ void IOController::printClosedRoomMsg(std::ostream& stream)
 	stream << "Closed Room!\n";
 }
 
+void IOController::printGoodbye(std::ostream& stream)
+{
+	stream << "Goodbye!\n";
+}
+
 char IOController::readMenuInput(std::istream& stream)
 {
 	char input;
@@ -69,7 +75,7 @@ char IOController::readMenuInput(std::istream& stream)
 
 	stream.ignore();
 
-	if (input < '0' || input > '6')
+	if ((input < '1' || input > '6') && input != 'e')
 		throw std::exception("Char command not valid");
 
 	return input;

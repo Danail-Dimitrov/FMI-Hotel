@@ -33,6 +33,8 @@ public:
 
 	static void printClosedRoomMsg(std::ostream& stream = std::cout);
 
+	static void printGoodbye(std::ostream& stream = std::cout);
+
 	//Методи за четене:
 	/*! Чете един символ, число, представляващо избраната команта
 	* Връща:
