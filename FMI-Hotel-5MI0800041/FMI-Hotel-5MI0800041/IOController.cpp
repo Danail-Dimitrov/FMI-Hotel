@@ -68,6 +68,11 @@ void IOController::printGoodbye(std::ostream& stream)
 	stream << "Goodbye!\n";
 }
 
+void IOController::printRegisteredUserMsg(std::ostream& stream)
+{
+	stream << "Registration done!\n";
+}
+
 char IOController::readMenuInput(std::istream& stream)
 {
 	char input;

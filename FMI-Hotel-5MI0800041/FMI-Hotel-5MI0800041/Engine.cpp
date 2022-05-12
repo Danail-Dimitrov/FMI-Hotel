@@ -18,13 +18,14 @@ void Engine::registerUser()
 		throw std::exception("Room is closed!");
 
 	Date startDate = IOController::readDate("the first");
-	Date endDate = IOController::readDate("the second");
-
-	if(startDate > endDate)
-		throw std::exception("Start date must be before end date!");
 
 	if (startDate < today)
 		throw std::exception("Start date can not be before today");
+
+	Date endDate = IOController::readDate("the second");
+
+	if(startDate > endDate)
+		throw std::exception("Start date must be before end date!");	
 
 	String fileName = buildReservationFileName(id);
 
@@ -39,6 +40,8 @@ void Engine::registerUser()
 	RoomReservation reservation = RoomReservation(id, startDate, endDate, firstName, lastName, comment, true);
 
 	writeReservationToFile(fileName, reservation);
+
+	IOController::printRegisteredUserMsg();
 }
 
 Room Engine::getRoom(const String& id)
@@ -89,7 +92,7 @@ void Engine::writeReservationToFile(const String& fileName, const RoomReservatio
 	std::ofstream ofs((buildReservationFileName(reservation.getRoomId())).getData(), std::ios::app);
 	HelperController::checkStream(ofs);
 
-	ofs << reservation << std::endl;
+	ofs << reservation << "\n";
 
 	ofs.close();
 }
@@ -97,6 +100,9 @@ void Engine::writeReservationToFile(const String& fileName, const RoomReservatio
 void Engine::findFreeRooms()
 {
 	Date desieredDate = IOController::readDate("the desired");
+
+	if (desieredDate < today)
+		throw std::exception("Date must be earlier than today");
 
 	IOController::printFreeRoomsStartMsg(desieredDate);
 
@@ -115,9 +121,6 @@ void Engine::findFreeRooms()
 				IOController::printNthRoom(crrRoom, roomsPrinted + 1);
 				++roomsPrinted;			
 		}		
-
-		//Във файла има нов ред след всяка стая
-		roomsFile.ignore();
 	}
 
 	if(roomsPrinted == 0)
@@ -136,6 +139,10 @@ void Engine::getPerfectRoom()
 	unsigned desiredNumOfBeds = IOController::readNumberOfBeds();
 
 	Date startDate = IOController::readDate("the first");
+
+	if (startDate < today)
+		throw std::exception("Start date must be earlier than today");
+
 	Date endDate = IOController::readDate("the second");
 
 	if(startDate > endDate)
@@ -176,8 +183,6 @@ void Engine::getPerfectRoom()
 				perfectRooms[0] = crrRoom;
 			}
 		}
-
-		ifs.ignore();
 	}
 
 	if(perfectRoomsCount == 0)
@@ -193,6 +198,9 @@ void Engine::getReport()
 {
 	Date startDate = IOController::readDate("the first");
 	Date endDate = IOController::readDate("the second");
+
+	if (startDate > endDate)
+		throw std::exception("Start date must be before end date!");
 
 	std::ifstream ifs("rooms.txt");
 	HelperController::checkStream(ifs);
@@ -213,9 +221,6 @@ void Engine::getReport()
 		reportFile << "Room " << crrRoom.getId() << ":\n";
 
 		getReportForRoom(crrRoom, startDate, endDate, reportFile);
-
-		//Има нов ред след стаите
-		ifs.ignore();
 	}
 
 	reportFile.close();
@@ -310,6 +315,8 @@ void Engine::freeRoom(const Room& room)
 void Engine::getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile)
 {
 	String fileName = buildReservationFileName(room.getId());
+
+	createReservationsFile(fileName);
 
 	std::ifstream ifs(fileName.getData());
 	HelperController::checkStream(ifs);
