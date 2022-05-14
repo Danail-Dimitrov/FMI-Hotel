@@ -11,7 +11,7 @@ int main()
 {
 	Engine& engine = Engine::getEngine();
 
-	engine.Run();
+	engine.run();
 
 	return 0;
 }

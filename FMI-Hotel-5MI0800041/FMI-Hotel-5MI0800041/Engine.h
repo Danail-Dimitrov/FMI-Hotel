@@ -57,7 +57,7 @@ public:
 	Engine(const Engine& other) = delete;
 
 	//Методи:
-	void Run();
+	void run();
 
 	static Engine& getEngine();
 };

@@ -192,6 +192,8 @@ void Engine::getPerfectRoom()
 	}
 	else
 		IOController::printPerfectRooms(perfectRooms, perfectRoomsCount);
+
+	delete[] perfectRooms;
 }
 
 void Engine::getReport()
@@ -267,6 +269,8 @@ void Engine::closeRoom()
 	IOController::printClosedRoomMsg();
 
 	ofs.close();
+
+	delete[] rooms;
 }
 
 void Engine::freeRoom(const Room& room)
@@ -310,6 +314,8 @@ void Engine::freeRoom(const Room& room)
 	IOController::printFreedRoomMsg();
 
 	ofs.close();
+
+	delete[] reservations;
 }
 
 void Engine::getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile)
@@ -441,7 +447,7 @@ unsigned Engine::daysInUse(const RoomReservation& reservation, const Date& first
 	return count;
 }
 
-void Engine::Run()
+void Engine::run()
 {
 	IOController::prindGreeting();
 	today = IOController::readDate("todays");
