@@ -1,11 +1,4 @@
 #include "HelperController.h"
-
-HelperController& HelperController::getHelperController()
-{
-	static HelperController helperController;
-	return helperController;
-}
-
 void HelperController::resize(char* arr, unsigned& size, int multiplier)
 {
 	int newSize = size * multiplier;

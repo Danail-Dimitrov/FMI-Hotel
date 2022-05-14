@@ -7,7 +7,6 @@
 class HelperController
 {
 public:
-	static HelperController& getHelperController();
 	//! Преразмеряване на масив
 	/*! Променя дълцината на масив от символи с даден размер 
 	* Приема :
