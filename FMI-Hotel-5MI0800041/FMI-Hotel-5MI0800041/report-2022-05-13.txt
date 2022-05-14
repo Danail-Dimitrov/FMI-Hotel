@@ -1,0 +1,14 @@
+Report for the period 13/5/2022to 31/12/2026 :
+(Note: if the end date for the report is before the end date of a reservation, that has started in the wanted time period, the real end date for the reservation will be printed)
+Room A15:
+1. A15 14/5/2022 16/5/2022 f s 0 NO_COMMENT
+Total days used: 3
+Room A21:
+Total days used: 0
+Room A20:
+1. A20 16/6/2022 18/6/2022 f s 1 NO_COMMENT
+2. A20 14/5/2022 16/5/2022 t d 0 NO_COMMENT
+3. A20 1/1/2023 1/2/2023 r g 1 NO_COMMENT
+Total days used: 38
+Room A30:
+Total days used: 0

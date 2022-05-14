@@ -29,6 +29,10 @@ private:
 
 	void getPerfectRoom();
 
+	void deleteReservationsForClosedRoom(const String& reservationsFileName);
+
+	void reweriteReservations(const RoomReservation* arr, int count, const String& fileName);
+
 	void getReport();
 
 	void closeRoom();

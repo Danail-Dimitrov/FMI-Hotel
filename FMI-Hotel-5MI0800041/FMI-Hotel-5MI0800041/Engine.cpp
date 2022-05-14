@@ -77,7 +77,7 @@ bool Engine::isRoomAvailable(const String& reservationsFileName, const Date& sta
 	{
 		RoomReservation crrReservation;
 		ifs >> crrReservation;
-		if (HelperController::doTimePeriodsCross(crrReservation.getStartDate(), crrReservation.getEndDate(), startDaete, endDate) || !(crrReservation.getIsActive()))
+		if (HelperController::doTimePeriodsCross(crrReservation.getStartDate(), crrReservation.getEndDate(), startDaete, endDate) && crrReservation.getIsActive())
 			return false;
 		
 		//Има символ за нов ред
@@ -102,7 +102,7 @@ void Engine::findFreeRooms()
 	Date desieredDate = IOController::readDate("the desired");
 
 	if (desieredDate < today)
-		throw std::exception("Date must be earlier than today");
+		throw std::exception("Date can't earlier than today");
 
 	IOController::printFreeRoomsStartMsg(desieredDate);
 
@@ -196,6 +196,46 @@ void Engine::getPerfectRoom()
 	delete[] perfectRooms;
 }
 
+void Engine::deleteReservationsForClosedRoom(const String& reservationsFileName)
+{
+	std::ifstream ifs(reservationsFileName.getData());
+	HelperController::checkStream(ifs);
+
+	unsigned reservationsCount = getNumberReservationsInFile(ifs);
+	RoomReservation* reservations = new RoomReservation[reservationsCount];
+
+	int index = 0;
+	int reservationsChecked = 0;
+	//Има нов ред накрая на файла и eof не връща истина когато трябва
+	while (reservationsChecked < reservationsCount)
+	{
+		RoomReservation crrReservation;
+		ifs >> crrReservation;
+		if (crrReservation.getStartDate() < today || (crrReservation.getStartDate() < today && crrReservation.getEndDate() < today))
+			reservations[index++] = crrReservation;
+
+		reservationsChecked++;
+	}
+
+	ifs.close();
+
+	//Не използвам функцията writeReservationToFile, защото тя отваря и затваря потока за всяка една резерваци, така хасби време излишно
+	reweriteReservations(reservations, index - 1, reservationsFileName);
+
+	delete[] reservations;
+}
+
+void Engine::reweriteReservations(const RoomReservation* arr, int count, const String& fileName)
+{
+	std::ofstream ofs(fileName.getData(), std::ios::trunc);
+	HelperController::checkStream(ofs);
+
+	for (int i = 0; i < count; ++i)
+		ofs << arr[i] << "\n";
+
+	ofs.close();
+}
+
 void Engine::getReport()
 {
 	Date startDate = IOController::readDate("the first");
@@ -234,11 +274,6 @@ void Engine::closeRoom()
 	String id = IOController::readRoomId();
 	Room room = getRoom(id);
 
-	String fileName = buildReservationFileName(id);
-
-	if(!isRoomAvailable(fileName, today, today))
-		freeRoom(room);
-
 	room.setIsOpen(0);
 
 	std::ifstream ifs("rooms.txt");
@@ -265,6 +300,8 @@ void Engine::closeRoom()
 
 	for(size_t i = 0; i < roomsCount; i++)
 		ofs << rooms[i] << "\n";
+
+	deleteReservationsForClosedRoom(buildReservationFileName(id));
 
 	IOController::printClosedRoomMsg();
 
@@ -305,17 +342,11 @@ void Engine::freeRoom(const Room& room)
 	ifs.close();
 
 	//Не използвам функцията writeReservationToFile, защото тя отваря и затваря потока за всяка една резерваци, така хасби време излишно
-	std::ofstream ofs(fileName.getData(), std::ios::trunc);
-	HelperController::checkStream(ofs);
-
-	for(size_t i = 0; i < index - 1; i++)
-		ofs << reservations[i];
-
-	IOController::printFreedRoomMsg();
-
-	ofs.close();
+	reweriteReservations(reservations, index, fileName);
 
 	delete[] reservations;
+
+	IOController::printFreedRoomMsg();
 }
 
 void Engine::getReportForRoom(const Room& room, const Date& startDate, const Date& endDate, std::ofstream& reportFile)
@@ -326,9 +357,6 @@ void Engine::getReportForRoom(const Room& room, const Date& startDate, const Dat
 
 	std::ifstream ifs(fileName.getData());
 	HelperController::checkStream(ifs);
-
-	//ако не съществува файла тоав ще го създаде
-	createReservationsFile(fileName);
 
 	ifs.peek();
 	unsigned counter = 0;
