@@ -19,7 +19,7 @@ public:
 	*/
 	static void resize(char* arr, unsigned& size, int multiplier = 2);
 
-	static String convertNumToChar(long number);
+	static String convertNumToStr(long number);
 
 	static Date getLaterDate(const Date& date1, const Date& date2);
 

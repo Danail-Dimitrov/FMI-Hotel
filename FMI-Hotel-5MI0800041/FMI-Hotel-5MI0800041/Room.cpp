@@ -1,10 +1,10 @@
 #include "Room.h"
 
-Room::Room(): id("NO_ID"), numberOfBed(0), isOpen(0), comment("NO_COMMENT")
+Room::Room(): id("NO_ID"), numberOfBeds(0), isOpen(0), comment("NO_COMMENT")
 {
 }
 
-Room::Room(const String& id, const unsigned short numberOfBed, const bool isOpen, String comment): id(id), numberOfBed(numberOfBed), isOpen(isOpen), comment(comment)
+Room::Room(const String& id, const unsigned short numberOfBed, const bool isOpen, String comment): id(id), numberOfBeds(numberOfBed), isOpen(isOpen), comment(comment)
 {
 }
 
@@ -26,14 +26,14 @@ bool Room::operator!=(const Room& other)
 std::ostream& operator<<(std::ostream& stream, const Room& obj)
 {
 	const char SEPARATOR = ' ';
-	stream << obj.getId() << SEPARATOR << obj.getNumberOfBed() << SEPARATOR << obj.getIsOpen() << SEPARATOR << obj.getComment();
+	stream << obj.getId() << SEPARATOR << obj.getNumberOfBeds() << SEPARATOR << obj.getIsOpen() << SEPARATOR << obj.getComment();
 	return stream;
 }
 
 std::istream& operator>>(std::istream& stream, Room& obj)
 {
 	obj.id.get(' ', stream);
-	stream >> obj.numberOfBed;
+	stream >> obj.numberOfBeds;
 	stream.ignore();
 	stream >> obj.isOpen;
 	stream.ignore();

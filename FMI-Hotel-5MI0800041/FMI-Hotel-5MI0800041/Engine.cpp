@@ -162,24 +162,24 @@ void Engine::getPerfectRoom()
 		ifs >> crrRoom;
 
 		String fileName = buildReservationFileName(crrRoom.getId());
-		if(isRoomAvailable(fileName, startDate, endDate) && crrRoom.getNumberOfBed() >= desiredNumOfBeds)
+		if(isRoomAvailable(fileName, startDate, endDate) && crrRoom.getNumberOfBeds() >= desiredNumOfBeds)
 		{
-			if(crrRoom.getNumberOfBed() == perfectRoomBedCount)
+			if(crrRoom.getNumberOfBeds() == perfectRoomBedCount)
 			{
 				perfectRooms[perfectRoomsCount++] = crrRoom;
 			}
 			else if(perfectRoomsCount == 0)
 			{
 				perfectRooms[perfectRoomsCount++] = crrRoom;
-				perfectRoomBedCount = crrRoom.getNumberOfBed();
+				perfectRoomBedCount = crrRoom.getNumberOfBeds();
 			}
-			else if(crrRoom.getNumberOfBed() < perfectRoomBedCount)
+			else if(crrRoom.getNumberOfBeds() < perfectRoomBedCount)
 			{
 				delete[] perfectRooms;
 				//Знаем, че тези които сега са в масива, както и сегашната не са най добрите стай, за това няма шанс те да са във финалния масив и не е нужно да предвидим място за тях
 				perfectRooms = new Room[roomsInFile - 1 - perfectRoomsCount];
 				perfectRoomsCount = 1;
-				perfectRoomBedCount = crrRoom.getNumberOfBed();
+				perfectRoomBedCount = crrRoom.getNumberOfBeds();
 				perfectRooms[0] = crrRoom;
 			}
 		}
@@ -187,7 +187,7 @@ void Engine::getPerfectRoom()
 
 	if(perfectRoomsCount == 0)
 	{
-		String requirements = String("Number of bdes: ") + HelperController::convertNumToChar(desiredNumOfBeds);
+		String requirements = String("Number of bdes: ") + HelperController::convertNumToStr(desiredNumOfBeds);
 		IOController::printNoRoomsFound(requirements);
 	}
 	else
@@ -386,25 +386,25 @@ unsigned Engine::getNumberRoomsInFile(const String& fileName)
 String Engine::getReportFileName(const Date& date)
 {
 	String str = "report-";
-	str += HelperController::convertNumToChar(date.getYear());
+	str += HelperController::convertNumToStr(date.getYear());
 	str += "-";
 	if(date.getMonth() < 10)
 	{
-		str += HelperController::convertNumToChar(0);
-		str += HelperController::convertNumToChar(date.getMonth());		
+		str += HelperController::convertNumToStr(0);
+		str += HelperController::convertNumToStr(date.getMonth());
 	}
 	else
-		str += HelperController::convertNumToChar(date.getMonth());
+		str += HelperController::convertNumToStr(date.getMonth());
 
 	str += "-";
 	
 	if (date.getDay() < 10)
 	{
-		str += HelperController::convertNumToChar(0);
-		str += HelperController::convertNumToChar(date.getDay());
+		str += HelperController::convertNumToStr(0);
+		str += HelperController::convertNumToStr(date.getDay());
 	}
 	else
-		str += HelperController::convertNumToChar(date.getDay());
+		str += HelperController::convertNumToStr(date.getDay());
 	
 	str += ".txt";
 	return str;

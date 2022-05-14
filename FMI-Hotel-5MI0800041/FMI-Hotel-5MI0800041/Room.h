@@ -7,7 +7,7 @@ class Room
 private:
 	//Член-данни:
 	String id;/*!< Номера на стаята */  
-	unsigned short numberOfBed;/*!< Броя легла в стаята */
+	unsigned short numberOfBeds;/*!< Броя легла в стаята */
 	bool isOpen;/*!< Флаг показващ дали стъаята в момента е затворена */
 	String comment;
 
@@ -38,7 +38,7 @@ public:
 	*	Връща:
 	*		unsigned short
 	*/
-	unsigned short getNumberOfBed() const { return this->numberOfBed; }
+	unsigned short getNumberOfBeds() const { return this->numberOfBeds; }
 	//! Селектор за флаг за състояние
 	/*!	
 	*	Връща:

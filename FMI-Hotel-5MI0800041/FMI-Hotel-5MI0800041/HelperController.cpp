@@ -10,7 +10,7 @@ void HelperController::resize(char* arr, unsigned& size, int multiplier)
 	size = size * multiplier;
 }
 
-String HelperController::convertNumToChar(long number)
+String HelperController::convertNumToStr(long number)
 {
 	String result;
 
